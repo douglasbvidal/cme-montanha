@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://douglasbvidal.github.io/cme-montanha/sitemap.xml

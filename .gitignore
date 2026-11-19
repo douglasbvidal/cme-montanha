@@ -1,0 +1,20 @@
+# Dados de amostra e relatórios internos: NUNCA vão ao repositório público
+_amostra/
+_relatorios/
+tools/RELATORIO_FRONT.md
+
+# Dados internos de controle (não exibir publicamente)
+data/pendencias.json
+data/manifesto.csv
+
+# Sistema e editores
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.bak
+~$*
+__pycache__/
+*.pyc
+.vscode/
+.idea/

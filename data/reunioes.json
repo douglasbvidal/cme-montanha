@@ -1,0 +1,101 @@
+[
+  {
+    "data": "2026-04-28",
+    "tipo": "extraordinaria",
+    "numero": null,
+    "local": "Casa dos Conselhos",
+    "status": "realizada",
+    "pauta_id": "pauta-2026-04-28",
+    "ata_id": null,
+    "reservada": false,
+    "observacao_publica": null
+  },
+  {
+    "data": "2026-05-21",
+    "tipo": "ordinaria",
+    "numero": 6,
+    "local": "Casa dos Conselhos",
+    "status": "realizada",
+    "pauta_id": "pauta-2026-05-21",
+    "ata_id": null,
+    "reservada": false,
+    "observacao_publica": null
+  },
+  {
+    "data": "2026-05-27",
+    "tipo": "extraordinaria",
+    "numero": null,
+    "local": "Casa dos Conselhos",
+    "status": "realizada",
+    "pauta_id": "pauta-2026-05-27",
+    "ata_id": null,
+    "reservada": false,
+    "observacao_publica": null
+  },
+  {
+    "data": "2026-06-17",
+    "tipo": "ordinaria",
+    "numero": 7,
+    "local": "Casa dos Conselhos (videoconferência)",
+    "status": "realizada",
+    "pauta_id": "pauta-2026-06-17",
+    "ata_id": null,
+    "reservada": false,
+    "observacao_publica": null
+  },
+  {
+    "data": "2026-07-30",
+    "tipo": "ordinaria",
+    "numero": null,
+    "local": null,
+    "status": "cancelada",
+    "pauta_id": null,
+    "ata_id": null,
+    "reservada": false,
+    "observacao_publica": "Cancelada por falta de matéria de pauta."
+  },
+  {
+    "data": "2026-09-09",
+    "tipo": "extraordinaria",
+    "numero": null,
+    "local": "Polo UAB Montanha",
+    "status": "realizada",
+    "pauta_id": null,
+    "ata_id": null,
+    "reservada": false,
+    "observacao_publica": null
+  },
+  {
+    "data": "2026-11-18",
+    "tipo": "ordinaria",
+    "numero": null,
+    "local": "Casa dos Conselhos",
+    "status": "realizada",
+    "pauta_id": null,
+    "ata_id": null,
+    "reservada": false,
+    "observacao_publica": null
+  },
+  {
+    "data": "2026-11-18",
+    "tipo": "extraordinaria",
+    "numero": null,
+    "local": null,
+    "status": "realizada",
+    "pauta_id": null,
+    "ata_id": null,
+    "reservada": true,
+    "observacao_publica": null
+  },
+  {
+    "data": "2026-12-16",
+    "tipo": "ordinaria",
+    "numero": null,
+    "local": null,
+    "status": "prevista",
+    "pauta_id": null,
+    "ata_id": null,
+    "reservada": false,
+    "observacao_publica": "Data prevista; convocação a confirmar."
+  }
+]
