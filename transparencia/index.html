@@ -38,6 +38,12 @@
 <header class="wrap page-head"><p class="eyebrow">O Conselho</p><h1>Transparência</h1><p class="lead">Informações públicas sobre o Conselho, números do acervo publicado e dados abertos deste site.</p></header>
 <div class="wrap">
   <div id="transparencia-conteudo" class="prose"><p class="tiny">Carregando…</p></div>
+  <section class="section" aria-labelledby="bol-t"><h2 id="bol-t">Boletins e relatórios</h2>
+    <p>Boletins semestrais de atividades e documento anual de atos, previstos no art. 21 da Lei nº 1.166/2024. Só aparecem aqui depois de elaborados e aprovados pelo Conselho.</p>
+    <div data-lista-documentos="boletins" data-vazio="Nenhum boletim publicado até o momento." data-prefixo="bo"><noscript><div class="empty-state"><p>Ative o JavaScript para ver e filtrar a lista de documentos.</p></div></noscript></div></section>
+  <section class="section" aria-labelledby="cons-t"><h2 id="cons-t">Atos do Conselho por ano</h2>
+    <p class="tiny">Lista gerada automaticamente a partir do índice deste portal, agrupada por ano e tipo. Serve para consulta e não substitui o documento anual elaborado e aprovado pelo Conselho.</p>
+    <div id="consolidacao-anual"><p class="tiny">Carregando…</p></div></section>
   <section class="section" aria-labelledby="num-t"><h2 id="num-t">Números do acervo publicado</h2><div id="transparencia-numeros"><p class="tiny">Carregando…</p></div></section>
   <section class="panel" aria-labelledby="dados-t">
     <h2 id="dados-t">Dados abertos deste site</h2>
@@ -48,7 +54,8 @@
       <li><a href="../data/conselheiros.json">Composição (JSON)</a></li>
       <li><a href="../calendario.ics">Calendário de reuniões (iCalendar .ics)</a></li>
     </ul>
-    <p class="tiny">Para pedir informação que não esteja publicada, use a página <a href="../contato/index.html">Fale com o CME</a>.</p>
+    <div id="datas-atualizacao" hidden></div>
+    <p class="tiny">Para pedir informação que não esteja publicada, veja a página <a href="../contato/index.html">Fale com o CME</a> (inclui os canais oficiais de pedido pela Lei de Acesso à Informação).</p>
   </section>
   <section class="section" aria-labelledby="outros-t"><h2 id="outros-t">Outros documentos</h2><div data-lista-documentos="outros" data-vazio="Nenhum outro documento publicado ainda." data-prefixo="ou"><noscript><div class="empty-state"><p>Ative o JavaScript para ver e filtrar a lista de documentos.</p></div></noscript></div></section>
 </div>
@@ -64,7 +71,7 @@
     </div>
     <div class="footer-bottom">
       <p>Conselho Municipal de Educação de Montanha — ES. Atos oficiais publicados para consulta; o documento assinado prevalece.</p>
-      <p>Documentos atualizados em: <span data-atualizacao>—</span></p>
+      <p data-atualizacao-linha hidden>Última atualização do acervo: <time data-atualizacao></time></p>
     </div>
   </div>
 </footer>

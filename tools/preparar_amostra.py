@@ -15,7 +15,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 DEST = RAIZ / '_amostra'
-NAO_COPIAR = {'_amostra', '_relatorios', 'data', 'docs', 'calendario.ics', '.git', '.github', 'tools', '_site'}
+NAO_COPIAR = {'_amostra', '_relatorios', '_revisao', 'data', 'docs', 'calendario.ics', '.git', '.github', 'tools', '_site'}
 
 
 def pdf_minimo(texto):
@@ -95,21 +95,65 @@ def main():
             'assunto': 'Ato de outro órgão, apenas linkado (dado fictício).', 'arquivo': None, 'tamanho_kb': None,
             'paginas': None, 'status': 'vigente', 'fonte_original': 'Fonte de exemplo', 'sha256': None,
             'observacao': '', 'externo': True, 'url': f'https://example.org/ato-{n}',
+            'estado_documental': 'referencia_externa',
         })
 
+    # ids das reuniões: explícitos e, em duas delas na mesma data, o identificador automático data+tipo
+    id_r2 = f'{d(-5)}-extraordinaria'
+    # campos novos (opcionais) em alguns documentos, para testar selos, filtros e relações
+    def doc(i):
+        return next(x for x in docs if x['id'] == i)
+    doc('ex-04').update({'numero': '004/2026', 'titulo': 'Resolução de exemplo nº 004/2026 (resolucoes)',
+                         'estado_documental': 'original_assinado', 'estado_deliberativo': 'aprovado_plenario',
+                         'estado_homologacao': 'homologado', 'estado_publicacao': 'publicado_dom', 'estado_vigencia': 'vigente',
+                         'data_publicacao_oficial': d(-295), 'fonte_publicacao_oficial': 'Diário oficial de exemplo, ed. 0, p. 0',
+                         'url_publicacao_oficial': 'https://example.org/diario-exemplo', 'data_indexacao': d(-2)})
+    doc('ex-05').update({'estado_documental': 'original_assinado', 'estado_publicacao': 'publicado_neste_portal',
+                         'paginas_no_arquivo': 'p. 1', 'data_indexacao': d(-1)})
+    doc('ex-06').update({'estado_documental': 'original_sem_assinatura', 'estado_deliberativo': 'emitido_ad_referendum',
+                         'estado_homologacao': 'nao_exigida', 'estado_publicacao': 'nao_publicado_oficialmente',
+                         'pendencia_verificacao': 'Referendo pelo Plenário de exemplo ainda não conferido.',
+                         'documento_relacionado': ['ex-04'], 'observacao_publica': 'Observação pública de exemplo.'})
+    doc('ex-10').update({'reuniao_id': 'ex-r1', 'natureza_pauta': 'original'})
+    doc('ex-11').update({'reuniao_id': id_r2, 'natureza_pauta': 'reproducao_digital'})
+    doc('ex-12').update({'reuniao_id': 'ex-r1', 'estado_deliberativo': 'aprovado_plenario'})
+    # segundo registro dentro do mesmo PDF da resolução ex-05 (paginas_no_arquivo)
+    base5 = doc('ex-05')
+    docs.append(dict(base5, id='ex-17', titulo='Parecer de exemplo contido no mesmo arquivo (pareceres)', categoria='pareceres',
+                     numero='5/2026', paginas_no_arquivo='p. 1 (segunda parte)', documento_relacionado=['ex-05']))
+    # convocação (categoria nova)
+    nome = 'exemplo-16.pdf'
+    dados = pdf_minimo('Convocacao de exemplo 16 - arquivo ficticio para teste')
+    (DEST / 'docs' / 'convocacoes').mkdir(parents=True, exist_ok=True)
+    (DEST / 'docs' / 'convocacoes' / nome).write_bytes(dados)
+    docs.append({'id': 'ex-16', 'categoria': 'convocacoes', 'titulo': 'Convocação de exemplo 16 (convocacoes)', 'numero': None,
+                 'ano': int(d(-50)[:4]), 'data': d(-50), 'emissor': 'Emissor de exemplo', 'assunto': 'Convocação fictícia para teste.',
+                 'arquivo': f'docs/convocacoes/{nome}', 'tamanho_kb': round(len(dados) / 1024, 1), 'paginas': 1,
+                 'status': 'referencia', 'fonte_original': 'Fonte de exemplo (fictícia)', 'sha256': hashlib.sha256(dados).hexdigest(),
+                 'observacao': '', 'reuniao_id': 'ex-r1', 'data_indexacao': d(-3)})
+
     reunioes = [
-        {'data': d(-45), 'tipo': 'ordinária', 'numero': 'EX-1', 'local': 'Local de exemplo (fictício)', 'status': 'realizada', 'pauta_id': 'ex-10', 'ata_id': 'ex-12'},
-        {'data': d(-5), 'tipo': 'extraordinária', 'numero': 'EX-2', 'local': 'Local de exemplo (fictício)', 'status': 'realizada', 'pauta_id': 'ex-11', 'ata_id': None},
-        {'data': d(-15), 'tipo': 'ordinária', 'numero': 'EX-3', 'local': 'Local de exemplo (fictício)', 'status': 'cancelada', 'pauta_id': None, 'ata_id': None},
-        {'data': d(12), 'tipo': 'ordinaria', 'numero': None, 'local': None, 'status': 'prevista', 'pauta_id': None, 'ata_id': None,
-         'reservada': False, 'observacao_publica': 'Observação pública de exemplo: data a confirmar.'},
-        {'data': d(-25), 'tipo': 'extraordinaria', 'numero': None, 'local': None, 'status': 'realizada', 'pauta_id': None, 'ata_id': None,
-         'reservada': True, 'observacao_publica': ''},
-        {'data': d(40), 'tipo': 'extraordinária', 'numero': 'EX-5', 'local': 'Local de exemplo (fictício)', 'status': 'convocada', 'pauta_id': None, 'ata_id': None},
+        {'id': 'ex-r1', 'data': d(-45), 'tipo': 'ordinária', 'numero': 1, 'local': 'Local de exemplo (fictício)', 'status': 'realizada',
+         'horario': '9h', 'modalidade': 'presencial', 'pauta_id': 'ex-10', 'ata_id': 'ex-12', 'convocacao_id': 'ex-16',
+         'documentos_relacionados': ['ex-04']},
+        {'data': d(-5), 'tipo': 'extraordinária', 'numero': None, 'local': 'Local de exemplo (fictício)', 'status': 'realizada', 'pauta_id': 'ex-11', 'ata_id': None},
+        {'data': d(-5), 'tipo': 'ordinária', 'numero': None, 'local': None, 'status': 'realizada', 'pauta_id': None, 'ata_id': None,
+         'observacao_publica': 'Segunda reunião de exemplo na mesma data.'},
+        {'id': 'ex-r3', 'data': d(-15), 'tipo': 'ordinária', 'numero': None, 'local': 'Local de exemplo (fictício)', 'status': 'cancelada', 'pauta_id': None, 'ata_id': None},
+        {'id': 'ex-r4', 'data': d(12), 'tipo': 'ordinaria', 'numero': None, 'local': None, 'status': 'prevista', 'pauta_id': None, 'ata_id': None,
+         'horario': '16h30', 'modalidade': 'hibrida', 'reservada': False, 'observacao_publica': 'Observação pública de exemplo: data a confirmar.'},
+        {'id': 'ex-r5', 'data': d(-25), 'tipo': 'extraordinaria', 'numero': None, 'local': 'Local que NÃO deve aparecer', 'status': 'realizada',
+         'pauta_id': None, 'ata_id': None, 'reservada': True, 'observacao_publica': 'Observação que NÃO deve aparecer', 'horario': '18h'},
+        {'id': 'ex-r6', 'data': d(40), 'tipo': 'extraordinária', 'numero': 5, 'local': 'Local de exemplo (fictício)', 'status': 'convocada', 'pauta_id': None, 'ata_id': None,
+         'modalidade': 'remota'},
+        {'id': 'ex-r7', 'data': d(-60), 'tipo': 'ordinária', 'numero': None, 'local': None, 'status': 'sem_registro', 'pauta_id': None, 'ata_id': None,
+         'observacao_publica': 'Data de calendário de exemplo sem registro de realização.'},
     ]
     conselheiros = [
-        {'nome': 'Pessoa de exemplo A', 'segmento': 'Segmento de exemplo 1', 'entidade': 'Entidade de exemplo', 'condicao': 'titular', 'cargo_mesa': 'Cargo de exemplo', 'mandato': 'Mandato de exemplo', 'fonte': 'Ato de exemplo'},
-        {'nome': 'Pessoa de exemplo B', 'segmento': 'Segmento de exemplo 1', 'entidade': 'Entidade de exemplo', 'condicao': 'suplente', 'cargo_mesa': '', 'mandato': 'Mandato de exemplo', 'fonte': 'Ato de exemplo'},
+        {'nome': 'Pessoa de exemplo A', 'segmento': 'Segmento de exemplo 1', 'entidade': 'Entidade de exemplo', 'condicao': 'titular', 'par': 1, 'cargo_mesa': 'Cargo de exemplo', 'mandato': 'Mandato de exemplo', 'fonte': 'Ato de exemplo', 'ato_url': 'https://example.org/ato-nomeacao'},
+        {'nome': 'Pessoa de exemplo B', 'segmento': 'Segmento de exemplo 1', 'entidade': None, 'condicao': 'suplente', 'par': 1, 'cargo_mesa': '', 'mandato': 'Mandato de exemplo', 'fonte': 'Ato de exemplo', 'grafia_no_ato': 'Pessoa de Exemplo B (grafia do ato)'},
+        {'nome': 'Pessoa de exemplo D', 'segmento': 'Segmento de exemplo 1', 'entidade': None, 'condicao': 'suplente', 'par': 2, 'cargo_mesa': '', 'mandato': 'Mandato de exemplo', 'fonte': 'Ato de exemplo'},
+        {'nome': 'Pessoa de exemplo E', 'segmento': 'Segmento de exemplo 1', 'entidade': None, 'condicao': 'titular', 'par': 2, 'cargo_mesa': '', 'mandato': 'Mandato de exemplo', 'fonte': 'Ato de exemplo'},
         {'nome': 'Pessoa de exemplo C', 'segmento': 'Segmento de exemplo 2', 'entidade': 'Entidade de exemplo', 'condicao': 'titular', 'cargo_mesa': '', 'mandato': 'Mandato de exemplo', 'fonte': 'Ato de exemplo'},
     ]
     fonte = 'Fonte de exemplo, art. 0'
@@ -128,9 +172,15 @@ def main():
         'faq': [{'pergunta': f'Pergunta de exemplo {i}?', 'resposta': f'Resposta de exemplo {i} (fictícia).', 'fonte': fonte} for i in range(1, 4)],
         'glossario': [{'termo': t, 'definicao': f'Definição de exemplo para {t} (fictícia).'} for t in ['Ata de exemplo', 'Ênfase de exemplo', 'Parecer de exemplo', 'Quórum de exemplo']],
         'transparencia': {'acesso_a_informacao': {'texto': 'Texto de exemplo sobre acesso à informação (fictício).', 'fonte': fonte},
-                          'itens_de_exemplo': ['Item de exemplo 1', {'titulo': 'Item de exemplo 2', 'texto': 'Descrição de exemplo.'}]},
+                          'itens_de_exemplo': ['Item de exemplo 1', {'titulo': 'Item de exemplo 2', 'texto': 'Descrição de exemplo.'}],
+                          'como_pedir': [{'texto': 'Texto de exemplo sobre como fazer pedido formal de informação (fictício).', 'fonte': fonte}]},
+        'composicao_resumo': {'cadeiras_legais_titulares': 5, 'cadeiras_legais_suplentes': 5, 'titulares_nomeados': 3,
+                              'suplentes_nomeados': 2, 'mandato_texto': 'Mandato de exemplo (fictício).',
+                              'ato_titulo': 'Ato de nomeação de exemplo', 'ato_url': 'https://example.org/ato-nomeacao', 'fonte': fonte},
+        'conselheiros_nota': {'texto': 'Nota de exemplo sobre a situação da composição (fictícia).', 'fonte': fonte},
         'links_uteis': {
             'verificados': [{'titulo': 'Link de exemplo', 'url': 'https://example.org/', 'descricao': 'Descrição de exemplo (domínio reservado para testes).'},
+                            {'titulo': 'Ouvidoria e Acesso à Informação de exemplo', 'url': 'https://example.org/ouvidoria', 'descricao': 'Canal de exemplo para pedidos pela LAI.'},
                             {'titulo': 'Link inválido de exemplo (não deve aparecer)', 'url': 'javascript:alert(1)', 'descricao': 'Teste de segurança.'}],
             'candidatos_nao_verificados': [{'titulo': 'Candidato não verificado (não deve aparecer)', 'url': 'https://example.com/'}],
         },
@@ -140,13 +190,13 @@ def main():
     for nome, obj in [('documentos', docs), ('reunioes', reunioes), ('conselheiros', conselheiros), ('conteudo', conteudo)]:
         (DEST / 'data' / f'{nome}.json').write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding='utf-8')
 
-    linhas = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//CME Montanha//Amostra//PT-BR', 'CALSCALE:GREGORIAN']
-    for i, r in enumerate(reunioes):
-        dia = r['data'].replace('-', '')
-        linhas += ['BEGIN:VEVENT', f'UID:amostra-{i}@exemplo.invalid', f'DTSTAMP:{hoje:%Y%m%d}T000000Z',
-                   f'DTSTART;VALUE=DATE:{dia}', f'SUMMARY:Reunião de exemplo {r["numero"]}', 'END:VEVENT']
-    linhas.append('END:VCALENDAR')
-    (DEST / 'calendario.ics').write_text('\r\n'.join(linhas) + '\r\n', encoding='utf-8', newline='')
+    # registro de atualização e calendário gerados pelas próprias ferramentas (na pasta da amostra)
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import subprocess
+    subprocess.run([sys.executable, str(RAIZ / 'tools' / 'registrar_atualizacao.py'), str(DEST)], check=True, stdout=subprocess.DEVNULL)
+    import gerar_ics
+    (DEST / 'calendario.ics').write_text(gerar_ics.gerar(DEST), encoding='utf-8', newline='')
     print(f'Amostra pronta em {DEST} ({len(docs)} documentos, {len(reunioes)} reuniões).')
 
 

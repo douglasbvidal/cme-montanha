@@ -1,7 +1,9 @@
 # Dados de amostra e relatórios internos: NUNCA vão ao repositório público
 _amostra/
 _relatorios/
+_revisao/
 tools/RELATORIO_FRONT.md
+tools/RELATORIO_FRONT_V2.md
 
 # Dados internos de controle (não exibir publicamente)
 data/pendencias.json

@@ -115,7 +115,7 @@
   },
   {
    "pergunta": "Quem são os conselheiros atuais?",
-   "resposta": "Os membros foram nomeados pelo Decreto nº 4.908/2025 (publicado no DOM/ES de 28/05/2025), para o quadriênio 2025–2028. A lista completa, com titulares, suplentes e mesa diretora, está na página Conselheiros, junto com a situação da recomposição solicitada pelo Ofício nº 04/2026.",
+   "resposta": "Os membros foram nomeados pelo Decreto nº 4.908/2025 (publicado no DOM/ES de 28/05/2025), com mandato de 3 anos (Lei nº 1.166/2024, art. 7º). A lista completa, com titulares, suplentes e mesa diretora, está na página Conselheiros, junto com a situação da recomposição solicitada pelo Ofício nº 04/2026.",
    "fonte": "Decreto nº 4.908/2025; Edital nº 001/2025; Ofício nº 04/2026"
   },
   {
@@ -237,7 +237,7 @@
   },
   {
    "termo": "PME",
-   "definicao": "Plano Municipal de Educação, cuja aprovação é competência do CME segundo a Lei 1.166/2024. Em Montanha, o PME 2015–2025 foi aprovado pela Lei nº 905/2015, com vigência prorrogada até 22/06/2026 pela Lei nº 1.194/2025.",
+   "definicao": "Plano Municipal de Educação, cuja aprovação é competência do CME segundo a Lei 1.166/2024. Em Montanha, o PME 2015–2025 foi aprovado pela Lei nº 905/2015, com vigência prorrogada até 22/06/2026 pela Lei nº 1.194/2025. Esse prazo terminou; nova lei do PME não foi localizada (consulta em 19/11/2026).",
    "fonte": "Lei nº 1.166/2024, art. 3º, II; Leis nº 905/2015 e nº 1.194/2025 (Legislação Online de Montanha, consulta em 19/11/2026)"
   },
   {
@@ -393,7 +393,17 @@
   "candidatos_nao_verificados": []
  },
  "conselheiros_nota": {
-  "texto": "A lista reproduz a composição nomeada pelo Decreto nº 4.908/2025, último ato de nomeação de membros do CME localizado na Legislação Online e no Diário Oficial dos Municípios (consulta em 19/11/2026). Pelo Ofício nº 04/2026, o Conselho solicitou à SEMECT a regularização da composição do CME-MO e encaminhamentos sobre a representação estudantil; até a data da consulta não foi localizado novo decreto de nomeação. A Lei nº 1.166/2024 prevê 2 representantes do Conselho Tutelar, e o decreto nomeia 1 titular e 1 suplente. O mandato 2025–2028 corresponde ao quadriênio do Edital de Convocação nº 001/2025.",
+  "texto": "A lista reproduz a composição nomeada pelo Decreto nº 4.908/2025, último ato de nomeação de membros do CME localizado na Legislação Online e no Diário Oficial dos Municípios (consulta em 19/11/2026). Pelo Ofício nº 04/2026, o Conselho solicitou à SEMECT a regularização da composição do CME-MO e encaminhamentos sobre a representação estudantil; até a data da consulta não foi localizado novo decreto de nomeação. A Lei nº 1.166/2024 prevê 2 representantes do Conselho Tutelar, e o decreto nomeia 1 titular e 1 suplente. O decreto nomeia 14 titulares e 14 suplentes para as 15 cadeiras de titular e 15 de suplente previstas em lei. No decreto, o nome do Presidente aparece grafado como \"Douglas Bitencurt Vidal\".",
   "fonte": "Decreto nº 4.908/2025; Ofício nº 04/2026; Lei nº 1.166/2024, art. 4º; Edital nº 001/2025 (DOM/ES Ed. 2.739, 08/04/2025)"
+ },
+ "composicao_resumo": {
+  "cadeiras_legais_titulares": 15,
+  "cadeiras_legais_suplentes": 15,
+  "titulares_nomeados": 14,
+  "suplentes_nomeados": 14,
+  "mandato_texto": "Mandato de 3 (três) anos, permitida uma recondução (Lei nº 1.166/2024, art. 7º). Posse em 14/04/2025; o Edital nº 001/2025 indica o período de 04/04/2025 a 04/04/2028, contado da instalação.",
+  "ato_titulo": "Decreto nº 4.908, de 27/05/2025 (DOM/ES Ed. 2.770, de 28/05/2025)",
+  "ato_url": "https://montanha.legislacaocompilada.com.br/norma.aspx?id=2528",
+  "fonte": "Lei nº 1.166/2024, arts. 4º e 7º; Decreto nº 4.908/2025; Edital nº 001/2025; ata de posse de 14/04/2025"
  }
 }

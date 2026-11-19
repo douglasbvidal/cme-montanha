@@ -19,7 +19,9 @@
     pareceres: { rotulo: 'Parecer', pagina: 'resolucoes-pareceres/index.html' },
     oficios: { rotulo: 'Ofício', pagina: 'oficios/index.html' },
     pautas: { rotulo: 'Pauta', pagina: 'reunioes/index.html', aba: 'pautas' },
+    convocacoes: { rotulo: 'Convocação', pagina: 'reunioes/index.html', aba: 'pautas' },
     atas: { rotulo: 'Ata', pagina: 'reunioes/index.html', aba: 'atas' },
+    boletins: { rotulo: 'Boletim ou relatório', pagina: 'transparencia/index.html' },
     outros: { rotulo: 'Outros documentos', pagina: 'transparencia/index.html' }
   };
   CME.STATUS_DOC = {
@@ -29,6 +31,42 @@
   CME.STATUS_REUNIAO = {
     realizada: 'Realizada', prevista: 'Prevista', convocada: 'Convocada', cancelada: 'Cancelada',
     sem_quorum: 'Sem quórum (informativa)', sem_registro: 'Prevista; sem registro de realização'
+  };
+  CME.MODALIDADES = { presencial: 'Presencial', remota: 'Remota (videoconferência)', hibrida: 'Híbrida (presencial e videoconferência)' };
+  /* Estados documentais (campos opcionais de documentos.json). tom: classe visual do selo; o texto sempre diz o estado. */
+  CME.ESTADOS = [
+    { campo: 'estado_documental', rotulo: 'Documento', valores: {
+      original_assinado: ['Original assinado', 'ok'], original_sem_assinatura: ['Cópia sem assinatura', 'warn'],
+      copia_com_tarja: ['Cópia com tarja de dados pessoais', 'info'], reproducao_digital: ['Reprodução digital', 'neutral'],
+      referencia_externa: ['Referência externa (link oficial)', 'neutral'] } },
+    { campo: 'estado_deliberativo', rotulo: 'Deliberação', valores: {
+      aprovado_plenario: ['Aprovado pelo Plenário', 'ok'], emitido_ad_referendum: ['Emitido ad referendum do Plenário', 'warn'],
+      ratificacao_registrada_em_ata_nao_aprovada: ['Ratificação registrada em ata ainda não aprovada', 'warn'],
+      referendo_em_minuta_de_ata: ['Referendo registrado em minuta de ata', 'warn'],
+      nao_aplicavel: ['Não se aplica', 'neutral'], pendente_verificacao: ['Pendente de verificação', 'warn'] } },
+    { campo: 'estado_homologacao', rotulo: 'Homologação', valores: {
+      homologado: ['Homologado', 'ok'], nao_exigida: ['Não exigida', 'neutral'], pendente: ['Pendente', 'warn'],
+      nao_localizada: ['Não localizada', 'warn'] } },
+    { campo: 'estado_publicacao', rotulo: 'Publicação', valores: {
+      publicado_dom: ['Publicado no DOM/ES', 'ok'], publicado_portal_transparencia: ['Publicado no Portal da Transparência', 'ok'],
+      publicado_neste_portal: ['Divulgado somente neste portal', 'info'], nao_publicado_oficialmente: ['Não publicado oficialmente', 'warn'] } },
+    { campo: 'estado_vigencia', rotulo: 'Vigência', valores: {
+      vigente: ['Vigente', 'ok'], prazo_encerrado: ['Prazo encerrado', 'neutral'], revogado: ['Revogado', 'danger'],
+      a_confirmar: ['A confirmar', 'warn'], nao_aplicavel: ['Não se aplica', 'neutral'] } }
+  ];
+  /* Lista de {campo, rotulo, valor, texto, tom} dos estados válidos do documento (omite "não se aplica"). */
+  CME.estadosDoc = function (d) {
+    var out = [];
+    if (!d) return out;
+    CME.ESTADOS.forEach(function (e) {
+      var v = d[e.campo];
+      if (typeof v !== 'string' || !e.valores[v] || v === 'nao_aplicavel') return;
+      out.push({ campo: e.campo, rotulo: e.rotulo, valor: v, texto: e.valores[v][0], tom: e.valores[v][1] });
+    });
+    return out;
+  };
+  CME.temEstado = function (d) {
+    return CME.ESTADOS.some(function (e) { return d && typeof d[e.campo] === 'string' && e.valores[d[e.campo]]; });
   };
   CME.MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho',
     'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
@@ -113,6 +151,49 @@
     var k = String(t || '').toLowerCase().trim();
     if (mapa[k]) return mapa[k];
     return k ? k.charAt(0).toUpperCase() + k.slice(1) : '';
+  };
+  CME.rotuloReuniao = function (r) {
+    var t = CME.rotuloTipoReuniao(r && r.tipo);
+    if (!t) return 'Reunião';
+    return /reuni/i.test(t) ? t : (/^(posse|sess)/i.test(t) ? t : 'Reunião ' + t.toLowerCase());
+  };
+  /* Identificadores estáveis de reunião: r.id (quando válido) ou data + tipo normalizado;
+     repetições recebem sufixo -2, -3… (mesmo algoritmo de tools/gerar_ics.py). Recebe a lista completa. */
+  CME.idsReunioes = function (lista) {
+    var usados = {};
+    return (lista || []).map(function (r) {
+      r = r || {};
+      var base = typeof r.id === 'string' && /^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(r.id) ? r.id
+        : (typeof r.id === 'string' && r.id.trim() ? CME.slug(r.id)
+          : (CME.dataValida(r.data) ? r.data : 'sem-data') + '-' + CME.slug(r.tipo || 'reuniao'));
+      var id = base, n = 2;
+      while (usados[id]) id = base + '-' + (n++);
+      usados[id] = true;
+      return id;
+    });
+  };
+  /* Horário: aceita "16h30", "9h", "09:00", "16:30". Devolve {h, m, texto} ou null. */
+  CME.horario = function (v) {
+    var m = /^\s*(\d{1,2})\s*(?:[h:]\s*(\d{2})?)\s*(?:h|min)?\s*$/i.exec(String(v == null ? '' : v));
+    if (!m) return null;
+    var h = parseInt(m[1], 10), mi = m[2] ? parseInt(m[2], 10) : 0;
+    if (h > 23 || mi > 59) return null;
+    return { h: h, m: mi, texto: h + 'h' + (mi ? (mi < 10 ? '0' : '') + mi : '') };
+  };
+  CME.linkReuniao = function (id) {
+    return raiz + 'reunioes/index.html?aba=calendario#reuniao-' + encodeURIComponent(String(id));
+  };
+  /* Variações de números de atos: "004/2026" → "004/2026 004-2026 4/2026 4-2026 004 2026". */
+  CME.variantesNumero = function (texto) {
+    var out = [];
+    String(texto == null ? '' : texto).replace(/(\d{1,4})\s*[\/\-.]\s*((?:19|20)\d{2})/g, function (m, n, a) {
+      var s = String(parseInt(n, 10));
+      [n + '/' + a, n + '-' + a, s + '/' + a, s + '-' + a, n + ' ' + a, s + ' ' + a].forEach(function (v) {
+        if (out.indexOf(v) === -1) out.push(v);
+      });
+      return m;
+    });
+    return out.join(' ');
   };
   CME.linkPagina = function (doc) {
     var c = CME.CATEGORIAS[doc && doc.categoria] || CME.CATEGORIAS.outros;
@@ -305,23 +386,51 @@
     });
     ver();
   }
+  /* data/atualizacao.json (gerado por tools/registrar_atualizacao.py): datas de mudança real de cada conjunto. */
+  CME.atualizacao = function () {
+    return CME.carregar('data/atualizacao.json').then(CME.objeto);
+  };
   function iniciarRodape() {
+    var linha = document.querySelector('[data-atualizacao-linha]');
     var alvo = document.querySelector('[data-atualizacao]');
-    if (!alvo) return;
-    CME.carregar('data/documentos.json').then(function (res) {
-      var max = '';
-      CME.lista(res).forEach(function (d) { if (d && CME.dataValida(d.data) && d.data > max) max = d.data; });
-      alvo.textContent = max ? CME.formatarData(max) : '—';
+    if (!linha || !alvo) return;
+    CME.atualizacao().then(function (a) {
+      var d = a.acervo && CME.dataValida(a.acervo.data) ? a.acervo.data : '';
+      if (!d) return; /* sem o arquivo, nenhuma data é exibida */
+      alvo.textContent = CME.formatarData(d);
+      alvo.setAttribute('datetime', d);
+      linha.hidden = false;
     });
   }
-  /* Rola até o alvo (#doc-...) depois que a lista é renderizada. */
+  /* Região viva para anúncios curtos (copiado, erro etc.). */
+  CME.anunciar = function (msg) {
+    var r = document.getElementById('cme-anuncio');
+    if (!r) {
+      r = document.createElement('p');
+      r.id = 'cme-anuncio';
+      r.className = 'sr-only';
+      r.setAttribute('role', 'status');
+      r.setAttribute('aria-live', 'polite');
+      document.body.appendChild(r);
+    }
+    r.textContent = '';
+    setTimeout(function () { r.textContent = msg; }, 30);
+  };
+  /* Rola até o alvo (#doc-..., #reuniao-...) depois que a lista é renderizada. */
   CME.focarAlvo = function () {
     var h = window.location.hash;
     if (!h || h.length < 2) return;
     var el;
     try { el = document.getElementById(decodeURIComponent(h.slice(1))); } catch (e) { el = null; }
     if (!el) return;
+    Array.prototype.forEach.call(document.querySelectorAll('.is-target'), function (x) { if (x !== el) x.classList.remove('is-target'); });
     el.classList.add('is-target');
+    /* alvo dentro de uma aba oculta: ativa a aba correspondente */
+    var painel = el.closest && el.closest('[role="tabpanel"]');
+    if (painel && painel.hidden) {
+      var aba = document.querySelector('[role="tab"][aria-controls="' + painel.id + '"]');
+      if (aba) aba.click();
+    }
     var det = el.querySelector('details');
     if (det && el.classList.contains('faq-item')) det.open = true;
     if (el.tagName === 'DETAILS') el.open = true;
@@ -330,12 +439,34 @@
     el.focus({ preventScroll: true });
   };
 
-  CME.copiar = function (texto, botao) {
-    function ok() { if (botao) { var t = botao.textContent; botao.textContent = 'Copiado'; setTimeout(function () { botao.textContent = t; }, 1800); } }
+  /* Copia texto: API de área de transferência; alternativa com execCommand; por fim, avisa para copiar manualmente. */
+  CME.copiar = function (texto, botao, rotuloOk) {
+    function ok() {
+      CME.anunciar(rotuloOk || 'Copiado para a área de transferência.');
+      if (botao) {
+        var rot = botao.querySelector('[data-rotulo]') || botao;
+        if (!rot.getAttribute('data-original')) rot.setAttribute('data-original', rot.textContent);
+        rot.textContent = 'Copiado';
+        setTimeout(function () { rot.textContent = rot.getAttribute('data-original'); }, 1800);
+      }
+    }
+    function alternativa() {
+      var ta = document.createElement('textarea');
+      ta.value = texto;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.opacity = '0'; ta.style.top = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      var feito = false;
+      try { feito = document.execCommand('copy'); } catch (e) { feito = false; }
+      document.body.removeChild(ta);
+      if (botao) botao.focus();
+      if (feito) ok(); else CME.anunciar('Não foi possível copiar automaticamente. Selecione o texto e use Ctrl+C.');
+    }
     if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(texto).then(ok, function () { window.prompt('Copie o texto:', texto); });
+      navigator.clipboard.writeText(texto).then(ok, alternativa);
     } else {
-      window.prompt('Copie o texto:', texto);
+      alternativa();
     }
   };
 
@@ -350,5 +481,7 @@
     iniciarMenu();
     iniciarVoltarTopo();
     iniciarRodape();
+    /* Links internos (#reuniao-…, #doc-…) clicados na mesma página: destaca e leva o foco ao alvo. */
+    window.addEventListener('hashchange', function () { setTimeout(CME.focarAlvo, 0); });
   });
 })();

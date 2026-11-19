@@ -35,15 +35,19 @@
 </header>
 <main id="conteudo">
 <nav class="breadcrumbs wrap" aria-label="Você está em"><ol><li><a href="../index.html">Início</a></li><li><span aria-current="page">Contato</span></li></ol></nav>
-<header class="wrap page-head"><p class="eyebrow">Participação</p><h1>Fale com o CME</h1><p class="lead">Dúvidas, sugestões e pedidos de informação. Este site não guarda mensagens: o formulário apenas prepara um e-mail no seu próprio programa.</p></header>
-<div class="wrap grid cols-2" style="align-items:start">
+<header class="wrap page-head"><p class="eyebrow">Participação</p><h1>Fale com o CME</h1><p class="lead">Contato institucional, pedidos formais de informação e protocolo são caminhos diferentes. Veja abaixo qual usar.</p></header>
+<div class="wrap">
+<div class="grid cols-2" style="align-items:start">
   <section class="panel" aria-labelledby="canais-t">
-    <h2 id="canais-t">Canais oficiais</h2>
+    <h2 id="canais-t">1. Contato institucional</h2>
+    <p class="tiny">Para dúvidas, sugestões, correção de dado pessoal e assuntos do dia a dia do Conselho.</p>
     <div id="contato-dados"><p class="tiny">Carregando…</p></div>
-    <p class="tiny" id="contato-discussoes" hidden>Perguntas de interesse geral também podem ser feitas no <a href="../mural/index.html">mural público de discussões</a> (exige conta no GitHub).</p>
+    <p class="tiny" id="contato-discussoes" hidden>Perguntas de interesse geral também podem ser feitas no <a href="../mural/index.html">mural público de discussões</a> — tudo o que for escrito lá fica público na internet.</p>
   </section>
   <section class="panel" aria-labelledby="form-t">
     <h2 id="form-t">Escrever mensagem</h2>
+    <div class="notice" role="note"><strong>Como funciona</strong>
+      <p>“Preparar e-mail” apenas abre o programa de e-mail do seu dispositivo com a mensagem pronta. <strong>Este site não envia nem guarda nada</strong>, e o CME só recebe a mensagem depois que você a enviar pelo seu e-mail. Sem programa de e-mail? Use “Copiar mensagem” e cole o texto no serviço de e-mail que você usa.</p></div>
     <form id="form-contato" class="form-grid" novalidate>
       <div class="field"><label for="c-nome">Seu nome (opcional)</label><input type="text" id="c-nome" autocomplete="name"></div>
       <div class="field"><label for="c-assunto">Assunto</label>
@@ -51,16 +55,30 @@
           <option>Dúvida</option><option>Sugestão</option><option>Pedido de informação</option>
           <option>Correção ou retirada de dado pessoal (LGPD)</option><option>Acessibilidade</option><option>Outro</option>
         </select></div>
-      <div class="field"><label for="c-mensagem">Mensagem</label><textarea id="c-mensagem" required aria-describedby="c-aviso"></textarea></div>
-      <p class="tiny" id="c-aviso">Não informe CPF, dados de saúde ou de estudantes. Para assuntos reservados, use os canais oficiais do Conselho.</p>
+      <div class="field"><label for="c-mensagem">Mensagem (obrigatória)</label><textarea id="c-mensagem" required aria-required="true" aria-describedby="c-erro c-aviso"></textarea>
+        <p class="field-error" id="c-erro" aria-live="assertive"></p></div>
+      <p class="tiny" id="c-aviso">Não informe CPF, dados de saúde ou de estudantes. Assuntos reservados devem ser tratados diretamente com a secretaria do Conselho.</p>
       <div class="actions" style="margin-top:0">
         <button class="btn" type="submit">Preparar e-mail</button>
-        <button class="btn ghost" type="button" id="contato-issue" hidden>Abrir pergunta pública no GitHub</button>
+        <button class="btn ghost" type="button" id="contato-copiar">Copiar mensagem</button>
       </div>
-      <p class="tiny" id="contato-sem-email" hidden>O e-mail público do Conselho ainda não foi informado neste site; o formulário mostrará o texto pronto para você copiar.</p>
+      <p class="tiny" id="contato-sem-email" hidden>O e-mail institucional do Conselho ainda não foi informado neste site; use “Copiar mensagem”.</p>
     </form>
-    <div id="contato-saida"></div>
+    <div id="contato-saida" role="status" aria-live="polite"></div>
   </section>
+</div>
+<div class="grid cols-2 section" style="align-items:start">
+  <section class="panel" aria-labelledby="lai-t">
+    <h2 id="lai-t">2. Pedido formal de informação (LAI)</h2>
+    <p>Para um pedido com base na Lei de Acesso à Informação, com registro e prazo de resposta, use os canais oficiais do Município indicados abaixo. Um e-mail ao Conselho não substitui esse registro.</p>
+    <div id="contato-lai-conteudo"><p class="tiny">Carregando…</p></div>
+  </section>
+  <section class="panel" aria-labelledby="prot-t">
+    <h2 id="prot-t">3. Protocolo oficial</h2>
+    <p>Este site <strong>não recebe nem protocola documentos</strong>. Requerimentos que precisam de número de protocolo e data de recebimento (por exemplo, processos com prazo) devem ser apresentados pelos canais oficiais de protocolo do Município ou entregues à secretaria do Conselho.</p>
+    <p class="tiny">Em caso de dúvida sobre onde protocolar, pergunte pelo contato institucional.</p>
+  </section>
+</div>
 </div>
 </main>
 <footer class="site-footer">
@@ -74,7 +92,7 @@
     </div>
     <div class="footer-bottom">
       <p>Conselho Municipal de Educação de Montanha — ES. Atos oficiais publicados para consulta; o documento assinado prevalece.</p>
-      <p>Documentos atualizados em: <span data-atualizacao>—</span></p>
+      <p data-atualizacao-linha hidden>Última atualização do acervo: <time data-atualizacao></time></p>
     </div>
   </div>
 </footer>
