@@ -105,15 +105,15 @@ BEGIN:VEVENT
 UID:reuniao-2026-04-28@cme-montanha
 DTSTAMP:20261119T000000Z
 DTSTART:20260428T193000Z
-SUMMARY:CME Montanha — Sessão plenária
+SUMMARY:CME Montanha — 5ª reunião ordinária
 STATUS:CONFIRMED
 LOCATION:Casa dos Conselhos\, Montanha/ES
-DESCRIPTION:Convocada para 27/04 e adiada para 28/04. A pauta e os atos as
- sinados registram a sessão como reunião ordinária (5ª)\; a ata e o Of
- ício nº 02/2026 a registram como extraordinária. Aprovou as Resoluçõ
- es 001 a 003/2026 (inclusive o calendário de 2026) e os Pareceres 001 a 
- 003/2026.\nDetalhes\, pauta e ata: https://douglasbvidal.github.io/cme-mo
- ntanha/reunioes/index.html#reuniao-2026-04-28
+DESCRIPTION:5ª reunião ordinária\, conforme a pauta e os atos assinados
+ \; convocada para 27/04 e adiada para 28/04. A ata (ainda não aprovada) 
+ e o Ofício nº 02/2026 a chamam de extraordinária. Aprovou as Resoluç
+ ões 001 a 003/2026 (inclusive o calendário de 2026) e os Pareceres 001 
+ a 003/2026.\nDetalhes\, pauta e ata: https://douglasbvidal.github.io/cme-
+ montanha/reunioes/index.html#reuniao-2026-04-28
 URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
  ao-2026-04-28
 END:VEVENT
