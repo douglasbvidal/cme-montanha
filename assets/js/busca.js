@@ -7,24 +7,43 @@
 
   var indicePromessa = null;
 
-  function item(tipo, titulo, meta, texto, url, extra) {
+  /* oculto: termos que entram só na chave de busca (variantes de número, datas por extenso etc.). */
+  function item(tipo, titulo, meta, texto, url, extra, oculto) {
     return { tipo: tipo, titulo: titulo || '', meta: meta || '', texto: texto || '', url: url, extra: extra || null,
-      chave: CME.normalizar([titulo, meta, texto].join(' ')), chaveTitulo: CME.normalizar(titulo) };
+      chave: CME.normalizar([titulo, meta, texto, oculto || ''].join(' ')), chaveTitulo: CME.normalizar(titulo) };
+  }
+  function datasBusca(iso) {
+    return CME.dataValida(iso) ? [CME.formatarData(iso), CME.dataExtenso(iso), iso].join(' ') : '';
   }
 
   CME.indiceBusca = function () {
     if (indicePromessa) return indicePromessa;
-    indicePromessa = Promise.all([CME.carregar('data/documentos.json'), CME.carregar('data/conteudo.json')])
+    indicePromessa = Promise.all([CME.carregar('data/documentos.json'), CME.carregar('data/conteudo.json'),
+      CME.carregar('data/reunioes.json')])
       .then(function (r) {
         var idx = [];
         CME.lista(r[0]).forEach(function (d) {
           if (!d || d.id == null) return;
           var cat = CME.CATEGORIAS[d.categoria] || CME.CATEGORIAS.outros;
-          var meta = [cat.rotulo, d.numero ? 'nº ' + d.numero : '', d.ano || '', CME.STATUS_DOC[d.status] || '']
-            .filter(Boolean).join(' · ');
-          var texto = [d.assunto, d.emissor, d.observacao].filter(Boolean).join(' — ');
+          var estados = CME.estadosDoc(d);
+          var meta = [cat.rotulo, d.numero ? 'nº ' + d.numero : '', d.ano || '',
+            estados.length ? '' : (CME.STATUS_DOC[d.status] || '')].filter(Boolean).join(' · ');
+          var texto = [d.assunto, d.emissor, d.observacao, d.observacao_publica].filter(Boolean).join(' — ');
+          var oculto = [CME.variantesNumero([d.numero, d.titulo, d.assunto].join(' ')), datasBusca(d.data),
+            datasBusca(d.data_publicacao_oficial), CME.texto(d.fonte_publicacao_oficial),
+            estados.map(function (e) { return e.rotulo + ' ' + e.texto; }).join(' ')].join(' ');
           idx.push(item('Documento', d.titulo || 'Documento sem título', meta, texto, CME.linkPagina(d),
-            { pdf: CME.ehExterno(d) ? null : CME.hrefArquivo(d.arquivo), externo: CME.ehExterno(d) }));
+            { pdf: CME.ehExterno(d) ? null : CME.hrefArquivo(d.arquivo), externo: CME.ehExterno(d) }, oculto));
+        });
+        /* Reuniões (reservadas não entram no índice) */
+        var listaR = CME.lista(r[2]);
+        var idsR = CME.idsReunioes(listaR);
+        listaR.forEach(function (x, i) {
+          if (!x || x.reservada === true || !CME.dataValida(x.data)) return;
+          var titulo = CME.rotuloReuniao(x) + (x.numero ? ' nº ' + x.numero : '') + ' de ' + CME.formatarData(x.data);
+          var meta = [CME.STATUS_REUNIAO[x.status] || '', x.local ? 'Local: ' + x.local : ''].filter(Boolean).join(' · ');
+          var oculto = [datasBusca(x.data), CME.diaSemana(x.data), 'reunião', x.numero ? x.numero + 'ª' : ''].join(' ');
+          idx.push(item('Reunião', titulo, meta, x.observacao_publica || '', CME.linkReuniao(idsR[i]), null, oculto));
         });
         var c = CME.objeto(r[1]);
         var sobre = c.sobre && typeof c.sobre === 'object' ? c.sobre : null;
@@ -53,7 +72,7 @@
         CME.linksConteudo(c).forEach(function (l) {
           if (l && l.titulo && CME.urlExterna(l.url)) idx.push(item('Link útil', l.titulo, '', CME.texto(l.descricao), CME.raiz + 'links/index.html'));
         });
-        return { itens: idx, falhou: !r[0].ok && !r[1].ok, motivo: r[0].motivo || r[1].motivo };
+        return { itens: idx, falhou: !r[0].ok && !r[1].ok, motivo: r[0].motivo || r[1].motivo || r[2].motivo };
       });
     return indicePromessa;
   };
@@ -67,6 +86,7 @@
       var score = 0;
       termos.forEach(function (t) { if (it.chaveTitulo.indexOf(t) !== -1) score += 3; score += 1; });
       if (it.tipo === 'Documento') score += 0.5;
+      else if (it.tipo === 'Reunião') score += 0.3;
       res.push({ it: it, score: score });
     });
     res.sort(function (a, b) { return b.score - a.score || a.it.titulo.localeCompare(b.it.titulo, 'pt-BR'); });
@@ -139,6 +159,8 @@
     input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(executar, 120); });
     if (fechar) fechar.addEventListener('click', function () { dlg.close(); });
     dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    /* resultado na mesma página (ex.: #reuniao-…): fecha o diálogo para o foco ir ao alvo */
+    ul.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) dlg.close(); });
     document.addEventListener('keydown', function (e) {
       if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
       var a = document.activeElement;

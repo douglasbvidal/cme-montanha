@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Gera as páginas HTML estáticas do site do CME Montanha a partir de um molde comum.
 
-Uso (opcional; só é necessário ao mudar cabeçalho, menu, rodapé ou textos fixos):
-    python tools/gerar_paginas.py
+Uso (necessário ao mudar cabeçalho, menu, rodapé ou textos fixos):
+    python tools/gerar_paginas.py              # gera/regrava as páginas
+    python tools/gerar_paginas.py --verificar  # só confere se o HTML no disco corresponde ao molde
 
 As páginas geradas são arquivos estáticos versionados; o GitHub Pages não executa este script.
 Textos aqui apenas descrevem como usar o site; fatos institucionais vêm de data/*.json e
@@ -108,7 +109,7 @@ def rodape(r):
     </div>
     <div class="footer-bottom">
       <p>{e(RODAPE_FRASE)}</p>
-      <p>Documentos atualizados em: <span data-atualizacao>—</span></p>
+      <p data-atualizacao-linha hidden>Última atualização do acervo: <time data-atualizacao></time></p>
     </div>
   </div>
 </footer>
@@ -185,7 +186,11 @@ def documento(slug, pid, titulo, descricao, migalha, corpo, scripts, profundidad
 
 
 def cartao(r, slug, icone, titulo, texto):
-    return (f'<a class="source-card" href="{href(r, slug)}"><h3><span class="source-icon">{ICONES[icone]}</span>{e(titulo)}</h3>'
+    return cartao_link(href(r, slug), icone, titulo, texto)
+
+
+def cartao_link(url, icone, titulo, texto):
+    return (f'<a class="source-card" href="{url}"><h3><span class="source-icon">{ICONES[icone]}</span>{e(titulo)}</h3>'
             f'<p>{e(texto)}</p></a>')
 
 
@@ -234,7 +239,7 @@ pagina('', 'inicio', 'CME Montanha — Conselho Municipal de Educação de Monta
   <div>
     <p class="eyebrow">Conselho Municipal de Educação · Montanha (ES)</p>
     <h1 id="hero-t">Atos, reuniões e documentos públicos do CME Montanha</h1>
-    <p class="lead">Consulte a legislação, o regimento, as resoluções, os pareceres, os ofícios, as pautas e as atas publicados pelo Conselho, acompanhe o calendário de reuniões e fale com o CME.</p>
+    <p class="lead">Regimento, resoluções, pareceres, pautas, atas e calendário de reuniões do Conselho, em um só lugar.</p>
     <form class="hero-search" role="search" action="busca/index.html" method="get">
       <label class="sr-only" for="home-q">Buscar documentos e conteúdos</label>
       <input type="search" id="home-q" name="q" placeholder="Buscar por título, número ou assunto">
@@ -243,7 +248,7 @@ pagina('', 'inicio', 'CME Montanha — Conselho Municipal de Educação de Monta
     <p class="tiny">Dica: em qualquer página, pressione <kbd>/</kbd> para abrir a busca.</p>
   </div>
   <aside class="hero-card" aria-labelledby="prox-t">
-    <h2 id="prox-t">{ICONES['calendario']} Próximas reuniões</h2>
+    <h2 id="prox-t">{ICONES['calendario']} Próxima reunião</h2>
     <div id="home-reunioes"><p class="tiny">Carregando…</p></div>
     <p style="margin:12px 0 0"><a class="text-link" href="reunioes/index.html">Ver calendário completo</a></p>
   </aside>
@@ -251,30 +256,21 @@ pagina('', 'inicio', 'CME Montanha — Conselho Municipal de Educação de Monta
 <section class="soft-section" aria-labelledby="atalhos-t"><div class="wrap">
   <div class="section-title"><h2 id="atalhos-t">Acesso rápido</h2></div>
   <div class="grid cols-3">
-    {cartao(r0, 'legislacao', 'balanca', 'Legislação', 'Leis e atos normativos que tratam do Conselho e da educação municipal.')}
-    {cartao(r0, 'regimento', 'livro', 'Regimento interno', 'Regras de funcionamento do Conselho e situação do regimento.')}
+    {cartao(r0, 'regimento', 'livro', 'Regimento interno', 'Regras de funcionamento do Conselho.')}
     {cartao(r0, 'resolucoes-pareceres', 'doc', 'Resoluções e pareceres', 'Deliberações e manifestações do Conselho.')}
-    {cartao(r0, 'oficios', 'carta', 'Ofícios', 'Correspondências e encaminhamentos oficiais já enviados.')}
-    {cartao(r0, 'reunioes', 'calendario', 'Reuniões', 'Pautas, atas e calendário de reuniões, com arquivo para agenda.')}
-    {cartao(r0, 'conselheiros', 'pessoas', 'Conselheiros', 'Composição do Conselho conforme ato oficial.')}
-    {cartao(r0, 'transparencia', 'escudo', 'Transparência', 'Informações públicas, números do acervo e dados abertos.')}
-    {cartao(r0, 'contato', 'conversa', 'Fale com o CME', 'Dúvidas, sugestões e pedidos de informação.')}
+    {cartao_link(r0 + 'reunioes/index.html?aba=pautas', 'calendario', 'Pautas, atas e reuniões', 'Pautas, atas e calendário, com arquivo para agenda.')}
+    {cartao(r0, 'conselheiros', 'pessoas', 'Conselheiros', 'Composição conforme o ato de nomeação.')}
+    {cartao(r0, 'contato', 'conversa', 'Fale com o CME', 'E-mail institucional e pedidos de informação.')}
+    {cartao(r0, 'legislacao', 'balanca', 'Legislação', 'Leis e decretos sobre o Conselho e a educação municipal.')}
+    {cartao(r0, 'oficios', 'carta', 'Ofícios', 'Correspondências oficiais do Conselho.')}
+    {cartao(r0, 'transparencia', 'escudo', 'Transparência', 'Boletins, atos por ano e dados abertos.')}
     {cartao(r0, 'faq', 'info', 'Perguntas frequentes', 'Respostas rápidas sobre o Conselho e este site.')}
   </div>
 </div></section>
 <section class="section" aria-labelledby="ult-t"><div class="wrap">
-  <div class="section-title"><h2 id="ult-t">Últimos documentos publicados</h2><a class="text-link" href="busca/index.html">Buscar em todos os documentos</a></div>
+  <div class="section-title"><h2 id="ult-t">Últimos documentos incluídos</h2><a class="text-link" href="busca/index.html">Buscar em todos os documentos</a></div>
   <div id="home-documentos"><p class="tiny">Carregando…</p></div>
-</div></section>
-<section class="section" aria-labelledby="como-t"><div class="wrap">
-  <div class="panel">
-    <h2 id="como-t">Como usar este site</h2>
-    <ul>
-      <li>Cada documento traz a situação (vigente, assinado, enviado, em estudo ou referência), a data e o link para baixar o PDF.</li>
-      <li>Em “Verificar integridade”, o código SHA-256 permite conferir se o arquivo baixado é idêntico ao publicado.</li>
-      <li>Este site é um meio de consulta: em caso de divergência, prevalece o documento oficial assinado.</li>
-    </ul>
-  </div>
+  <p class="tiny" style="margin-top:14px">Este portal é um meio de consulta: em caso de divergência, prevalece o documento oficial assinado ou publicado no Diário Oficial.</p>
 </div></section>''', ['documentos', 'reunioes', 'paginas'])
 
 # ---------------------------------------------------------------- Sobre
@@ -321,13 +317,13 @@ pagina('reunioes', 'reunioes', 'Reuniões: pautas, atas e calendário',
                                  'Acompanhe as reuniões do Conselho. As atas são publicadas depois de aprovadas.') + f'''
 <div class="wrap" data-abas>
   <div class="tabs" role="tablist" aria-label="Seções de reuniões">
-    <button type="button" role="tab" id="tab-pautas" aria-controls="painel-pautas" aria-selected="false" data-aba="pautas">Pautas</button>
+    <button type="button" role="tab" id="tab-pautas" aria-controls="painel-pautas" aria-selected="false" data-aba="pautas">Pautas e convocações</button>
     <button type="button" role="tab" id="tab-atas" aria-controls="painel-atas" aria-selected="false" data-aba="atas">Atas</button>
     <button type="button" role="tab" id="tab-calendario" aria-controls="painel-calendario" aria-selected="true" data-aba="calendario" data-padrao="true">Calendário</button>
   </div>
   <section class="tab-panel" role="tabpanel" id="painel-pautas" aria-labelledby="tab-pautas" tabindex="0">
-    <h2 class="sr-only">Pautas</h2>
-    {lista_docs("pautas", "Nenhuma pauta publicada ainda.", "pa")}
+    <h2 class="sr-only">Pautas e convocações</h2>
+    {lista_docs("pautas,convocacoes", "Nenhuma pauta ou convocação publicada ainda.", "pa")}
   </section>
   <section class="tab-panel" role="tabpanel" id="painel-atas" aria-labelledby="tab-atas" tabindex="0">
     <h2 class="sr-only">Atas</h2>
@@ -339,7 +335,7 @@ pagina('reunioes', 'reunioes', 'Reuniões: pautas, atas e calendário',
     <div class="actions" id="ics-acoes" style="margin-top:0;margin-bottom:18px">
       <a class="btn" href="../calendario.ics" download>{ICONES['baixar']}<span>Baixar calendário (.ics)</span></a>
     </div>
-    <p class="tiny">O arquivo .ics pode ser importado no Outlook, Google Agenda ou no calendário do celular.</p>
+    <p class="tiny">O arquivo .ics pode ser importado no Outlook, Google Agenda ou no calendário do celular. Datas sem registro de realização não entram no arquivo; reuniões canceladas aparecem como canceladas.</p>
     <div class="grid" style="gap:28px">
       <div id="calendario-mensal" class="panel"><p class="tiny">Carregando…</p></div>
       <div id="lista-reunioes"><p class="tiny">Carregando…</p></div>
@@ -361,6 +357,12 @@ pagina('transparencia', 'transparencia', 'Transparência',
                                       'Informações públicas sobre o Conselho, números do acervo publicado e dados abertos deste site.') + f'''
 <div class="wrap">
   <div id="transparencia-conteudo" class="prose"><p class="tiny">Carregando…</p></div>
+  <section class="section" aria-labelledby="bol-t"><h2 id="bol-t">Boletins e relatórios</h2>
+    <p>Boletins semestrais de atividades e documento anual de atos, previstos no art. 21 da Lei nº 1.166/2024. Só aparecem aqui depois de elaborados e aprovados pelo Conselho.</p>
+    {lista_docs("boletins", "Nenhum boletim publicado até o momento.", "bo")}</section>
+  <section class="section" aria-labelledby="cons-t"><h2 id="cons-t">Atos do Conselho por ano</h2>
+    <p class="tiny">Lista gerada automaticamente a partir do índice deste portal, agrupada por ano e tipo. Serve para consulta e não substitui o documento anual elaborado e aprovado pelo Conselho.</p>
+    <div id="consolidacao-anual"><p class="tiny">Carregando…</p></div></section>
   <section class="section" aria-labelledby="num-t"><h2 id="num-t">Números do acervo publicado</h2><div id="transparencia-numeros"><p class="tiny">Carregando…</p></div></section>
   <section class="panel" aria-labelledby="dados-t">
     <h2 id="dados-t">Dados abertos deste site</h2>
@@ -371,7 +373,8 @@ pagina('transparencia', 'transparencia', 'Transparência',
       <li><a href="../data/conselheiros.json">Composição (JSON)</a></li>
       <li><a href="../calendario.ics">Calendário de reuniões (iCalendar .ics)</a></li>
     </ul>
-    <p class="tiny">Para pedir informação que não esteja publicada, use a página <a href="../contato/index.html">Fale com o CME</a>.</p>
+    <div id="datas-atualizacao" hidden></div>
+    <p class="tiny">Para pedir informação que não esteja publicada, veja a página <a href="../contato/index.html">Fale com o CME</a> (inclui os canais oficiais de pedido pela Lei de Acesso à Informação).</p>
   </section>
   <section class="section" aria-labelledby="outros-t"><h2 id="outros-t">Outros documentos</h2>{lista_docs("outros", "Nenhum outro documento publicado ainda.", "ou")}</section>
 </div>''', ['documentos', 'paginas'])
@@ -380,15 +383,19 @@ pagina('transparencia', 'transparencia', 'Transparência',
 pagina('contato', 'contato', 'Fale com o CME',
        'Canais públicos de contato do Conselho Municipal de Educação de Montanha (ES) e formulário que prepara uma mensagem de e-mail.',
        'Contato', cabeca_pagina('Participação', 'Fale com o CME',
-                                'Dúvidas, sugestões e pedidos de informação. Este site não guarda mensagens: o formulário apenas prepara um e-mail no seu próprio programa.') + '''
-<div class="wrap grid cols-2" style="align-items:start">
+                                'Contato institucional, pedidos formais de informação e protocolo são caminhos diferentes. Veja abaixo qual usar.') + '''
+<div class="wrap">
+<div class="grid cols-2" style="align-items:start">
   <section class="panel" aria-labelledby="canais-t">
-    <h2 id="canais-t">Canais oficiais</h2>
+    <h2 id="canais-t">1. Contato institucional</h2>
+    <p class="tiny">Para dúvidas, sugestões, correção de dado pessoal e assuntos do dia a dia do Conselho.</p>
     <div id="contato-dados"><p class="tiny">Carregando…</p></div>
-    <p class="tiny" id="contato-discussoes" hidden>Perguntas de interesse geral também podem ser feitas no <a href="../mural/index.html">mural público de discussões</a> (exige conta no GitHub).</p>
+    <p class="tiny" id="contato-discussoes" hidden>Perguntas de interesse geral também podem ser feitas no <a href="../mural/index.html">mural público de discussões</a> — tudo o que for escrito lá fica público na internet.</p>
   </section>
   <section class="panel" aria-labelledby="form-t">
     <h2 id="form-t">Escrever mensagem</h2>
+    <div class="notice" role="note"><strong>Como funciona</strong>
+      <p>“Preparar e-mail” apenas abre o programa de e-mail do seu dispositivo com a mensagem pronta. <strong>Este site não envia nem guarda nada</strong>, e o CME só recebe a mensagem depois que você a enviar pelo seu e-mail. Sem programa de e-mail? Use “Copiar mensagem” e cole o texto no serviço de e-mail que você usa.</p></div>
     <form id="form-contato" class="form-grid" novalidate>
       <div class="field"><label for="c-nome">Seu nome (opcional)</label><input type="text" id="c-nome" autocomplete="name"></div>
       <div class="field"><label for="c-assunto">Assunto</label>
@@ -396,16 +403,30 @@ pagina('contato', 'contato', 'Fale com o CME',
           <option>Dúvida</option><option>Sugestão</option><option>Pedido de informação</option>
           <option>Correção ou retirada de dado pessoal (LGPD)</option><option>Acessibilidade</option><option>Outro</option>
         </select></div>
-      <div class="field"><label for="c-mensagem">Mensagem</label><textarea id="c-mensagem" required aria-describedby="c-aviso"></textarea></div>
-      <p class="tiny" id="c-aviso">Não informe CPF, dados de saúde ou de estudantes. Para assuntos reservados, use os canais oficiais do Conselho.</p>
+      <div class="field"><label for="c-mensagem">Mensagem (obrigatória)</label><textarea id="c-mensagem" required aria-required="true" aria-describedby="c-erro c-aviso"></textarea>
+        <p class="field-error" id="c-erro" aria-live="assertive"></p></div>
+      <p class="tiny" id="c-aviso">Não informe CPF, dados de saúde ou de estudantes. Assuntos reservados devem ser tratados diretamente com a secretaria do Conselho.</p>
       <div class="actions" style="margin-top:0">
         <button class="btn" type="submit">Preparar e-mail</button>
-        <button class="btn ghost" type="button" id="contato-issue" hidden>Abrir pergunta pública no GitHub</button>
+        <button class="btn ghost" type="button" id="contato-copiar">Copiar mensagem</button>
       </div>
-      <p class="tiny" id="contato-sem-email" hidden>O e-mail público do Conselho ainda não foi informado neste site; o formulário mostrará o texto pronto para você copiar.</p>
+      <p class="tiny" id="contato-sem-email" hidden>O e-mail institucional do Conselho ainda não foi informado neste site; use “Copiar mensagem”.</p>
     </form>
-    <div id="contato-saida"></div>
+    <div id="contato-saida" role="status" aria-live="polite"></div>
   </section>
+</div>
+<div class="grid cols-2 section" style="align-items:start">
+  <section class="panel" aria-labelledby="lai-t">
+    <h2 id="lai-t">2. Pedido formal de informação (LAI)</h2>
+    <p>Para um pedido com base na Lei de Acesso à Informação, com registro e prazo de resposta, use os canais oficiais do Município indicados abaixo. Um e-mail ao Conselho não substitui esse registro.</p>
+    <div id="contato-lai-conteudo"><p class="tiny">Carregando…</p></div>
+  </section>
+  <section class="panel" aria-labelledby="prot-t">
+    <h2 id="prot-t">3. Protocolo oficial</h2>
+    <p>Este site <strong>não recebe nem protocola documentos</strong>. Requerimentos que precisam de número de protocolo e data de recebimento (por exemplo, processos com prazo) devem ser apresentados pelos canais oficiais de protocolo do Município ou entregues à secretaria do Conselho.</p>
+    <p class="tiny">Em caso de dúvida sobre onde protocolar, pergunte pelo contato institucional.</p>
+  </section>
+</div>
 </div>''', ['paginas'])
 
 # ---------------------------------------------------------------- Mural
@@ -415,7 +436,8 @@ pagina('mural', 'mural', 'Mural de discussões',
                               'Espaço público para perguntas e sugestões de interesse geral, hospedado nas Discussões do GitHub.') + '''
 <div class="wrap prose">
   <div class="notice warn" role="note"><strong>O mural é público e moderado.</strong>
-    <p>Tudo o que for escrito no mural pode ser lido por qualquer pessoa na internet. Não publique dados pessoais (CPF, telefone, endereço, informações de saúde ou de estudantes) nem assuntos reservados — esses temas devem seguir pelos canais oficiais do Conselho. Mensagens ofensivas, com dados pessoais ou fora do tema podem ser ocultadas ou removidas pela moderação.</p></div>
+    <p>Tudo o que for escrito no mural pode ser lido por qualquer pessoa na internet. Não publique dados pessoais (CPF, telefone, endereço, informações de saúde ou de estudantes) nem assuntos reservados — esses temas devem seguir pelos canais oficiais do Conselho. Mensagens ofensivas, com dados pessoais ou fora do tema podem ser ocultadas ou removidas pela moderação.</p>
+    <p>O mural não é canal de pedido formal de informação nem de protocolo, e mensagens enviadas a ele não são sigilosas. Para isso, veja a página <a href="../contato/index.html">Fale com o CME</a>.</p></div>
   <h2>Como participar</h2>
   <ol>
     <li>Crie uma conta gratuita no GitHub (ou entre com a sua).</li>
@@ -463,30 +485,35 @@ pagina('links', 'links', 'Links úteis',
 
 # ---------------------------------------------------------------- Privacidade
 pagina('privacidade', 'privacidade', 'Privacidade e proteção de dados',
-       'Como este site trata dados pessoais (LGPD): não coleta dados, não usa cookies nem rastreadores; como pedir correção ou retirada de dado pessoal.',
+       'Como este site trata dados (LGPD): sem formulário que armazene dados, sem cookies próprios e sem análise de audiência; hospedagem no GitHub Pages; como pedir correção ou retirada de dado pessoal.',
        'Privacidade', cabeca_pagina('Este site', 'Privacidade e proteção de dados',
-                                    'Este site foi feito para não coletar dados pessoais de quem o visita.') + '''
+                                    'O que acontece com dados quando você usa este site, quem os trata e como pedir correção de um dado pessoal.') + '''
 <div class="wrap prose">
-  <section class="panel"><h2>O que este site coleta</h2>
-    <p><strong>Nada.</strong> O site não usa cookies, não tem ferramentas de análise de audiência, não carrega rastreadores nem anúncios e não envia formulários para servidores.</p>
+  <section class="panel"><h2>O que este site faz e não faz</h2>
     <ul>
-      <li>A escolha de tema claro ou escuro fica salva apenas no seu navegador (armazenamento local) e pode ser apagada a qualquer momento.</li>
-      <li>O formulário “Fale com o CME” apenas monta uma mensagem no seu próprio programa de e-mail; nada é gravado pelo site.</li>
-      <li>O site é hospedado no GitHub Pages. Como qualquer servidor, o serviço de hospedagem pode registrar dados técnicos de acesso (como o endereço IP), conforme a política de privacidade do GitHub.</li>
-      <li>O mural incorporado (quando ativado pelo Conselho) e as Discussões do GitHub são serviços do GitHub, sujeitos às regras daquela plataforma.</li>
+      <li><strong>Sem formulário que armazene dados.</strong> O formulário “Fale com o CME” não envia nada a servidor: ele só abre o programa de e-mail do seu dispositivo (ou copia o texto). A mensagem só chega ao Conselho se você a enviar pelo seu e-mail, e aí ela segue as regras do seu provedor de e-mail e do e-mail institucional.</li>
+      <li><strong>Sem análise de audiência, rastreadores, anúncios ou cookies próprios.</strong> O código do site não carrega scripts de terceiros (o mural incorporado, descrito abaixo, está desativado por padrão).</li>
+      <li><strong>Preferência de tema.</strong> Se você usar o botão de tema claro/escuro, a escolha fica guardada apenas no seu navegador (armazenamento local, chave <code>cme-tema</code>). Ela não é enviada a ninguém e pode ser apagada nas configurações do navegador.</li>
+      <li><strong>Busca e filtros</strong> funcionam dentro do seu navegador, com os índices públicos do site; o que você digita não é enviado a servidor.</li>
     </ul>
   </section>
+  <section class="panel"><h2>Hospedagem (GitHub Pages)</h2>
+    <p>O site é hospedado no GitHub Pages, serviço do GitHub. Como ocorre com qualquer servidor web, o GitHub pode tratar dados técnicos de acesso — por exemplo, o endereço IP, a data e hora e a página pedida — em registros de servidor, para entregar as páginas e manter a segurança do serviço. Esse tratamento é feito pelo GitHub, conforme a <a href="https://docs.github.com/pt/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Declaração de Privacidade Geral do GitHub <span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>. O Conselho não tem acesso a esses registros.</p>
+  </section>
+  <section class="panel"><h2>Links e serviços externos</h2>
+    <p>Links para outros sites (Diário Oficial, Portal da Transparência, Legislação Online, GitHub e outros) abrem páginas com políticas de privacidade próprias. O mural de discussões e, quando ativado pelo Conselho, o mural incorporado (giscus) são serviços do GitHub: o que for escrito ali é público e segue as regras daquela plataforma.</p>
+  </section>
   <section class="panel"><h2>Documentos publicados</h2>
-    <p>Os documentos deste site são atos e registros públicos do Conselho, divulgados em respeito ao princípio da publicidade (Constituição Federal, art. 37) e à Lei de Acesso à Informação (Lei nº 12.527/2011). Antes da publicação, os documentos passam por triagem para não expor dados pessoais desnecessários, nos termos da Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018).</p>
+    <p>Os documentos deste site são atos e registros públicos do Conselho, divulgados em respeito ao princípio da publicidade (Constituição Federal, art. 37) e à Lei de Acesso à Informação (Lei nº 12.527/2011). Antes da publicação, os documentos passam por triagem para não expor dados pessoais desnecessários, nos termos da Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018); dados pessoais de terceiros podem aparecer cobertos por tarja.</p>
   </section>
   <section class="panel" id="pedido"><h2>Como pedir correção ou retirada de dado pessoal</h2>
     <ol>
-      <li>Acesse <a href="../contato/index.html">Fale com o CME</a> e escolha o assunto “Correção ou retirada de dado pessoal (LGPD)”.</li>
-      <li>Informe o documento (título e número) e o trecho em que o dado aparece. Não envie documentos pessoais pelo formulário.</li>
+      <li>Escreva ao Conselho <span data-email-publico>pela página <a href="../contato/index.html">Fale com o CME</a></span>, com o assunto “Correção ou retirada de dado pessoal (LGPD)”.</li>
+      <li>Informe o documento (título e número) e o trecho em que o dado aparece. Não envie cópias de documentos pessoais.</li>
       <li>O Conselho analisará o pedido; quando cabível, publicará versão com o dado protegido, preservando o ato original em seus arquivos.</li>
     </ol>
   </section>
-</div>''')
+</div>''', ['paginas'])
 
 # ---------------------------------------------------------------- Acessibilidade
 pagina('acessibilidade', 'acessibilidade', 'Acessibilidade',
@@ -522,7 +549,7 @@ pagina('acessibilidade', 'acessibilidade', 'Acessibilidade',
 # ---------------------------------------------------------------- Busca
 pagina('busca', 'busca', 'Busca',
        'Busca em todos os documentos e conteúdos publicados pelo Conselho Municipal de Educação de Montanha (ES).',
-       'Busca', cabeca_pagina('Este site', 'Buscar no site', 'Busque em títulos, números, assuntos, perguntas frequentes e glossário. A busca ignora acentos.') + '''
+       'Busca', cabeca_pagina('Este site', 'Buscar no site', 'Busque em documentos (título, número, assunto), reuniões (data, tipo), perguntas frequentes e glossário. A busca ignora acentos; números como 004/2026, 004-2026 ou 4/2026 são equivalentes.') + '''
 <div class="wrap">
   <form class="filters" role="search" action="index.html" method="get" style="grid-template-columns:1fr">
     <div class="field"><label for="busca-pagina">Termo de busca</label><input type="search" id="busca-pagina" name="q" autocomplete="off" placeholder="Ex.: resolução 2025, ata, regimento"></div>
@@ -545,17 +572,42 @@ PAGINA_404 = '''
 </div>'''
 
 
-def main():
-    criadas = []
+def renderizar():
+    """Devolve {caminho_relativo: html} de todas as páginas, sem escrever nada."""
+    saida = {}
     for slug, pid, titulo, descricao, migalha, corpo, scripts in PAGINAS:
-        destino = RAIZ / slug / 'index.html' if slug else RAIZ / 'index.html'
+        saida[(slug + '/index.html') if slug else 'index.html'] = documento(slug, pid, titulo, descricao, migalha, corpo, scripts)
+    saida['404.html'] = documento('', '404', 'Página não encontrada', 'A página procurada não foi encontrada no site do CME Montanha.',
+                                  None, PAGINA_404, [], profundidade='',
+                                  extra_head=SCRIPT_BASE_404 + '\n<meta name="robots" content="noindex">\n')
+    return saida
+
+
+def divergentes(raiz=RAIZ):
+    """Lista as páginas cujo HTML no disco difere do que o molde gera (usado por checar_links.py)."""
+    out = []
+    for rel, html_ in renderizar().items():
+        p = Path(raiz) / rel
+        # compara ignorando fim de linha (o Git no Windows pode converter LF em CRLF)
+        if not p.exists() or p.read_bytes().decode('utf-8').replace('\r\n', '\n') != html_:
+            out.append(rel)
+    return out
+
+
+def main():
+    import sys
+    if '--verificar' in sys.argv:
+        dif = divergentes()
+        for d in dif:
+            print('Desatualizada:', d)
+        print('Páginas conferidas: OK' if not dif else f'{len(dif)} página(s) diferente(s) do molde: rode python tools/gerar_paginas.py')
+        sys.exit(1 if dif else 0)
+    criadas = []
+    for rel, html_ in renderizar().items():
+        destino = RAIZ / rel
         destino.parent.mkdir(parents=True, exist_ok=True)
-        destino.write_text(documento(slug, pid, titulo, descricao, migalha, corpo, scripts), encoding='utf-8', newline='\n')
-        criadas.append(destino.relative_to(RAIZ).as_posix())
-    p404 = documento('', '404', 'Página não encontrada', 'A página procurada não foi encontrada no site do CME Montanha.',
-                     None, PAGINA_404, [], profundidade='', extra_head=SCRIPT_BASE_404 + '\n<meta name="robots" content="noindex">\n')
-    (RAIZ / '404.html').write_text(p404, encoding='utf-8', newline='\n')
-    criadas.append('404.html')
+        destino.write_text(html_, encoding='utf-8', newline='\n')
+        criadas.append(rel)
     print('Páginas geradas:', len(criadas))
     for c in criadas:
         print(' -', c)

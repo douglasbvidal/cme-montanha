@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 from xml.sax.saxutils import escape
 
-EXCLUIR = {'_amostra', '_relatorios', 'tools', '.github', '.git', 'assets', 'data', 'docs', '_site'}
+EXCLUIR = {'_amostra', '_relatorios', '_revisao', 'tools', '.github', '.git', 'assets', 'data', 'docs', '_site'}
 MARCADOR = '{{URL_SITE}}'
 
 

@@ -23,21 +23,30 @@
 
   /* ---------------- Início ---------------- */
   function inicio() {
-    CME.proximasReunioes && CME.proximasReunioes($('home-reunioes'), 3);
+    CME.proximasReunioes && CME.proximasReunioes($('home-reunioes'), 2);
     var el = $('home-documentos');
     if (!el) return;
     CME.carregar('data/documentos.json').then(function (res) {
-      var docs = CME.lista(res).filter(function (d) { return d && d.id != null && CME.dataValida(d.data); })
-        .sort(function (a, b) { return a.data < b.data ? 1 : a.data > b.data ? -1 : 0; }).slice(0, 5);
+      /* ordem: data de inclusão no portal (data_indexacao), quando existir; senão, data do documento */
+      function chave(d) { return CME.dataValida(d.data_indexacao) ? d.data_indexacao : (CME.dataValida(d.data) ? d.data : ''); }
+      var docs = CME.lista(res).filter(function (d) { return d && d.id != null && chave(d); })
+        .sort(function (a, b) {
+          var ka = chave(a), kb = chave(b);
+          if (ka !== kb) return ka < kb ? 1 : -1;
+          var da = CME.dataValida(a.data) ? a.data : '', db = CME.dataValida(b.data) ? b.data : '';
+          return da < db ? 1 : da > db ? -1 : 0;
+        }).slice(0, 5);
       if (!docs.length) { CME.vazio(el, 'Nenhum documento publicado ainda.'); return; }
       el.innerHTML = '<ul class="doc-list">' + docs.map(function (d) {
         var cat = CME.CATEGORIAS[d.categoria] || CME.CATEGORIAS.outros;
-        var st = CME.STATUS_DOC[d.status];
+        var st = CME.temEstado(d) ? '' : CME.STATUS_DOC[d.status];
         var externo = CME.ehExterno(d);
         var href = externo ? null : CME.hrefArquivo(d.arquivo);
+        var datas = (CME.dataValida(d.data) ? 'Documento de ' + CME.formatarData(d.data) : 'Documento sem data') +
+          (CME.dataValida(d.data_indexacao) ? ' · incluído em ' + CME.formatarData(d.data_indexacao) : '');
         return '<li><article class="doc-card"><div class="doc-top">' +
           (st ? '<span class="badge ' + esc(d.status) + '">' + esc(st) + '</span>' : '') +
-          '<span class="badge tipo">' + esc(cat.rotulo) + '</span><span class="tiny">' + esc(CME.formatarData(d.data)) + '</span></div>' +
+          '<span class="badge tipo">' + esc(cat.rotulo) + '</span><span class="tiny">' + esc(datas) + '</span></div>' +
           '<h3><a href="' + esc(CME.linkPagina(d)) + '">' + esc(d.titulo || 'Documento sem título') + '</a></h3>' +
           (d.assunto ? '<p class="assunto">' + esc(d.assunto) + '</p>' : '') +
           (externo ? '<div class="doc-actions"><a class="text-link" href="' + esc(d.url) + '" target="_blank" rel="noopener">Abrir no site oficial <span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a> <span class="badge externo">' + esc(CME.ROTULO_EXTERNO) + '</span></div>' : '') +
@@ -101,16 +110,87 @@
   }
 
   /* ---------------- Conselheiros ---------------- */
+  /* Agrupa pessoas de um segmento em pares titular → suplente (campo "par"; sem ele, pela ordem do ato). */
+  function paresDoSegmento(pessoas) {
+    var pares = [], porPar = {};
+    pessoas.forEach(function (p) {
+      var cond = String(p.condicao || '').toLowerCase();
+      var n = typeof p.par === 'number' && isFinite(p.par) ? String(p.par) : (/^\d+$/.test(String(p.par || '')) ? String(p.par) : '');
+      var alvo;
+      if (n) {
+        alvo = porPar[n];
+        if (!alvo) { alvo = porPar[n] = { n: +n, titular: null, suplente: null, extras: [] }; pares.push(alvo); }
+      } else if (cond === 'suplente') {
+        alvo = pares.filter(function (x) { return x.titular && !x.suplente && !x.fixo; }).pop();
+        if (!alvo) { alvo = { titular: null, suplente: null, extras: [] }; pares.push(alvo); }
+      } else {
+        alvo = { titular: null, suplente: null, extras: [] }; pares.push(alvo);
+      }
+      if (n) alvo.fixo = true;
+      if (cond === 'suplente' && !alvo.suplente) alvo.suplente = p;
+      else if (cond !== 'suplente' && !alvo.titular) alvo.titular = p;
+      else alvo.extras.push(p);
+    });
+    if (pares.every(function (x) { return x.n != null; })) pares.sort(function (a, b) { return a.n - b.n; });
+    return pares;
+  }
+  function pessoaHTML(p, atoGeral) {
+    if (!p) return '<span class="muted">—<span class="sr-only"> não consta na lista</span></span>';
+    var h = esc(p.nome);
+    if (p.cargo_mesa) h += ' <span class="badge tipo">' + esc(p.cargo_mesa) + '</span>';
+    if (p.entidade) h += '<span class="tiny" style="display:block">' + esc(p.entidade) + '</span>';
+    if (p.grafia_no_ato && p.grafia_no_ato !== p.nome) {
+      h += '<span class="tiny" style="display:block">Grafia no ato: “' + esc(p.grafia_no_ato) + '”</span>';
+    }
+    var u = CME.urlExterna(p.ato_url);
+    if (u && u !== atoGeral) h += '<a class="tiny" style="display:block" href="' + esc(u) + '" target="_blank" rel="noopener">Ato de nomeação <span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>';
+    return h;
+  }
   function conselheiros() {
     var el = $('lista-conselheiros');
-    CME.carregar('data/conselheiros.json').then(function (res) {
-      var lista = CME.lista(res).filter(function (p) { return p && p.nome; });
+    Promise.all([CME.carregar('data/conselheiros.json'), conteudo()]).then(function (r) {
+      var lista = CME.lista(r[0]).filter(function (p) { return p && p.nome; });
+      var c = r[1];
+      var res = c.composicao_resumo && typeof c.composicao_resumo === 'object' ? c.composicao_resumo : null;
+      var nota = c.conselheiros_nota && c.conselheiros_nota.texto ? c.conselheiros_nota : null;
       if (!lista.length) { CME.vazio(el, 'Composição será publicada após conferência do ato oficial.'); return; }
-      var html = '';
-      var mesa = lista.filter(function (p) { return p.cargo_mesa; });
+      var tit = lista.filter(function (p) { return String(p.condicao).toLowerCase() === 'titular'; }).length;
+      var sup = lista.filter(function (p) { return String(p.condicao).toLowerCase() === 'suplente'; }).length;
+      var atoGeral = res ? CME.urlExterna(res.ato_url) : null;
+      var html = '<section class="panel" aria-labelledby="resumo-t"><h2 id="resumo-t">Resumo da composição</h2>';
+      function n(v) { return typeof v === 'number' && isFinite(v) ? v : null; }
+      if (res && n(res.titulares_nomeados) != null && n(res.cadeiras_legais_titulares) != null) {
+        html += '<p class="resumo-num"><strong>' + n(res.titulares_nomeados) + ' de ' + n(res.cadeiras_legais_titulares) + '</strong> titulares nomeados' +
+          (n(res.suplentes_nomeados) != null && n(res.cadeiras_legais_suplentes) != null
+            ? ' e <strong>' + n(res.suplentes_nomeados) + ' de ' + n(res.cadeiras_legais_suplentes) + '</strong> suplentes nomeados' : '') +
+          ' em relação às cadeiras previstas em lei.</p>';
+      } else {
+        html += '<p>Esta página lista ' + tit + ' titulares e ' + sup + ' suplentes, conforme o ato de nomeação indicado na fonte. ' +
+          'O número de cadeiras previsto em lei está na página <a href="../sobre/index.html#composicao">Sobre</a>.</p>';
+      }
+      var linhas = [];
+      if (res && res.mandato_texto) linhas.push(['Mandato', esc(CME.texto(res.mandato_texto))]);
+      if (res && (res.ato_titulo || atoGeral)) {
+        linhas.push(['Ato de nomeação', atoGeral
+          ? '<a href="' + esc(atoGeral) + '" target="_blank" rel="noopener">' + esc(res.ato_titulo || 'Ver ato oficial') + ' <span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>'
+          : esc(res.ato_titulo)]);
+      }
+      if (linhas.length) html += '<dl class="doc-meta">' + linhas.map(function (l) { return '<div><dt>' + l[0] + ':</dt><dd>' + l[1] + '</dd></div>'; }).join('') + '</dl>';
+      if (res && res.fonte) html += CME.fonteHTML(res.fonte);
+      html += '</section>';
+      if (nota) {
+        html += '<div class="notice" role="note"><strong>Situação da composição</strong>' + paragrafos(nota.texto) +
+          (nota.fonte ? '<p class="fonte">' + esc(nota.fonte) + '</p>' : '') + '</div>';
+      }
+      function ordemCargo(c) {
+        var n = CME.normalizar(c);
+        return /^presidente/.test(n) ? 0 : /^vice/.test(n) ? 1 : /secretari/.test(n) ? 2 : 3;
+      }
+      var mesa = lista.filter(function (p) { return p.cargo_mesa; })
+        .sort(function (a, b) { return ordemCargo(a.cargo_mesa) - ordemCargo(b.cargo_mesa); });
       if (mesa.length) {
         html += '<section class="panel" aria-labelledby="mesa-t"><h2 id="mesa-t">Mesa diretora</h2><ul>' +
-          mesa.map(function (p) { return '<li><strong>' + esc(p.cargo_mesa) + ':</strong> ' + esc(p.nome) + '</li>'; }).join('') + '</ul></section>';
+          mesa.map(function (p) { return '<li><strong>' + esc(p.cargo_mesa) + ':</strong> ' + esc(p.nome) + (p.segmento ? ' <span class="tiny">(' + esc(p.segmento) + ')</span>' : '') + '</li>'; }).join('') + '</ul></section>';
       }
       var grupos = {}, ordem = [];
       lista.forEach(function (p) {
@@ -118,33 +198,26 @@
         if (!grupos[g]) { grupos[g] = []; ordem.push(g); }
         grupos[g].push(p);
       });
-      html += '<div class="table-wrap" style="margin-top:16px"><table><caption>Composição por segmento</caption><thead><tr>' +
-        '<th scope="col">Nome</th><th scope="col">Condição</th><th scope="col">Entidade</th><th scope="col">Mandato</th></tr></thead><tbody>';
+      html += '<div class="table-wrap pares" style="margin-top:16px"><table><caption>Conselheiros por segmento: cada titular e o respectivo suplente</caption>' +
+        '<thead><tr><th scope="col">Titular</th><th scope="col">Suplente</th></tr></thead>';
       ordem.forEach(function (g) {
-        html += '<tr><th scope="rowgroup" colspan="4">' + esc(g) + '</th></tr>';
-        /* mantém a ordem do ato oficial (cada titular seguido do seu suplente) */
-        grupos[g].forEach(function (p) {
-            var cond = p.condicao ? p.condicao.charAt(0).toUpperCase() + p.condicao.slice(1) : '—';
-            html += '<tr><td>' + esc(p.nome) + (p.cargo_mesa ? ' <span class="badge tipo">' + esc(p.cargo_mesa) + '</span>' : '') + '</td><td>' + esc(cond) +
-              '</td><td>' + esc(p.entidade || '—') + '</td><td>' + esc(p.mandato || '—') + '</td></tr>';
+        html += '<tbody><tr><th scope="rowgroup" colspan="2" class="segmento">' + esc(g) + '</th></tr>';
+        paresDoSegmento(grupos[g]).forEach(function (x) {
+          html += '<tr><td>' + pessoaHTML(x.titular, atoGeral) + '</td><td>' + pessoaHTML(x.suplente, atoGeral) + '</td></tr>';
+          x.extras.forEach(function (p) {
+            html += '<tr><td colspan="2">' + pessoaHTML(p, atoGeral) + ' <span class="tiny">(' + esc(p.condicao || 'condição não informada') + ')</span></td></tr>';
           });
+        });
+        html += '</tbody>';
       });
-      html += '</tbody></table></div>';
+      html += '</table></div>';
       var fontes = [];
       lista.forEach(function (p) { var f = CME.fontePublica(p.fonte); if (f && fontes.indexOf(f) === -1) fontes.push(f); });
       if (fontes.length) html += '<p class="fonte">' + esc(fontes.join('; ')) + '</p>';
+      var mand = [];
+      lista.forEach(function (p) { if (p.mandato && mand.indexOf(p.mandato) === -1) mand.push(p.mandato); });
+      if (mand.length && !(res && res.mandato_texto)) html += '<p class="tiny">Mandato indicado no registro: ' + esc(mand.join('; ')) + '.</p>';
       el.innerHTML = html;
-      /* nota pública sobre alterações em andamento (conteudo.json → conselheiros_nota) */
-      CME.carregar('data/conteudo.json').then(function (r) {
-        var c = r && r.dados;
-        var nota = c && c.conselheiros_nota;
-        if (!nota || !nota.texto) return;
-        var div = document.createElement('div');
-        div.className = 'notice';
-        div.innerHTML = '<strong>Situação da composição</strong>' + paragrafos(nota.texto) +
-          (nota.fonte ? '<p class="fonte">' + esc(nota.fonte) + '</p>' : '');
-        el.insertBefore(div, el.firstChild);
-      }).catch(function () {});
     });
   }
 
@@ -204,6 +277,50 @@
           return '<tr><td><a href="' + esc(CME.raiz + CME.CATEGORIAS[k].pagina + (CME.CATEGORIAS[k].aba ? '?aba=' + CME.CATEGORIAS[k].aba : '')) + '">' + esc(CME.CATEGORIAS[k].rotulo) + '</a></td><td>' + cont[k] + '</td></tr>';
         }).join('') + '<tr><th scope="row">Total</th><td><strong>' + docs.length + '</strong></td></tr></tbody></table></div>';
     });
+    consolidacaoAnual($('consolidacao-anual'));
+    datasAtualizacao($('datas-atualizacao'));
+  }
+
+  /* Consolidação anual (art. 21 da Lei 1.166/2024): lista gerada do índice, por ano e categoria. Não cria documento. */
+  var CATS_ATOS = ['regimento', 'resolucoes', 'pareceres', 'oficios', 'convocacoes', 'pautas', 'atas', 'boletins'];
+  function consolidacaoAnual(el) {
+    if (!el) return;
+    CME.carregar('data/documentos.json').then(function (res) {
+      var docs = CME.lista(res).filter(function (d) { return d && d.id != null && CATS_ATOS.indexOf(d.categoria) !== -1; });
+      var porAno = {}, semAno = [];
+      docs.forEach(function (d) {
+        var a = CME.anoDoc ? CME.anoDoc(d) : (CME.dataValida(d.data) ? d.data.slice(0, 4) : '');
+        if (!a) { semAno.push(d); return; }
+        (porAno[a] = porAno[a] || []).push(d);
+      });
+      var anos = Object.keys(porAno).sort().reverse();
+      if (!anos.length) { CME.vazio(el, 'Nenhum ato do Conselho publicado neste portal até o momento.'); return; }
+      function itemDoc(d) {
+        return '<li><a href="' + esc(CME.linkPagina(d)) + '">' + esc(d.titulo || 'Documento sem título') + '</a>' +
+          (CME.dataValida(d.data) ? ' <span class="tiny">— ' + esc(CME.formatarData(d.data)) + '</span>' : '') + '</li>';
+      }
+      el.innerHTML = anos.map(function (a, i) {
+        var l = porAno[a];
+        var corpo = CATS_ATOS.filter(function (c) { return l.some(function (d) { return d.categoria === c; }); }).map(function (c) {
+          var itens = l.filter(function (d) { return d.categoria === c; })
+            .sort(function (x, y) { return String(x.data || '') < String(y.data || '') ? -1 : String(x.data || '') > String(y.data || '') ? 1 : 0; });
+          return '<h4>' + esc(CME.CATEGORIAS[c].rotulo) + ' (' + itens.length + ')</h4><ul>' + itens.map(itemDoc).join('') + '</ul>';
+        }).join('');
+        return '<details class="ano-consolidado"' + (i === 0 ? ' open' : '') + '><summary>' + esc(a) + ' — ' + l.length +
+          (l.length === 1 ? ' documento' : ' documentos') + '</summary>' + corpo + '</details>';
+      }).join('') + (semAno.length ? '<p class="tiny">Documentos sem data ou ano informado: ' + semAno.length + '.</p>' : '');
+    });
+  }
+  function datasAtualizacao(el) {
+    if (!el) return;
+    CME.atualizacao().then(function (a) {
+      var itens = [['acervo', 'Acervo de documentos'], ['calendario', 'Reuniões e calendário'], ['composicao', 'Composição do Conselho'], ['conteudo', 'Textos institucionais']]
+        .filter(function (x) { return a[x[0]] && CME.dataValida(a[x[0]].data); });
+      if (!itens.length) { el.hidden = true; return; }
+      el.innerHTML = '<p class="tiny">Data da última mudança registrada em cada conjunto de dados (não é a data dos documentos):</p><ul>' +
+        itens.map(function (x) { return '<li>' + esc(x[1]) + ': <time datetime="' + esc(a[x[0]].data) + '">' + esc(CME.formatarData(a[x[0]].data)) + '</time></li>'; }).join('') + '</ul>';
+      el.hidden = false;
+    });
   }
 
   /* ---------------- Repositório (config) ---------------- */
@@ -214,56 +331,104 @@
   };
 
   /* ---------------- Contato ---------------- */
+  CME.emailPublico = function (cfg) {
+    return typeof cfg.email_publico === 'string' && /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(cfg.email_publico.trim()) ? cfg.email_publico.trim() : '';
+  };
+  /* O formulário NÃO envia nada: só monta um e-mail no programa do visitante ou copia o texto. */
   function contato() {
-    CME.config().then(function (cfg) {
-      var email = typeof cfg.email_publico === 'string' && /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(cfg.email_publico.trim()) ? cfg.email_publico.trim() : '';
+    Promise.all([CME.config(), conteudo()]).then(function (r) {
+      var cfg = r[0], c = r[1];
+      var email = CME.emailPublico(cfg);
       var dados = $('contato-dados');
       var linhas = [
-        ['E-mail', email ? '<a href="mailto:' + esc(email) + '">' + esc(email) + '</a>' : ''],
+        ['E-mail institucional', email ? '<a href="mailto:' + esc(email) + '">' + esc(email) + '</a> ' +
+          '<button type="button" class="btn small ghost" id="copiar-email">' + CME.icone('copy') + '<span data-rotulo>Copiar e-mail</span></button>' : ''],
         ['Endereço', cfg.endereco ? esc(cfg.endereco) : ''],
         ['Telefone', cfg.telefone_publico ? esc(cfg.telefone_publico) : '']
       ];
-      dados.innerHTML = '<dl class="doc-meta" style="display:grid;gap:8px">' + linhas.map(function (l) {
-        return '<div><dt>' + l[0] + ':</dt><dd>' + (l[1] || '<span class="muted">ainda não informado neste site</span>') + '</dd></div>';
+      dados.innerHTML = '<dl class="contato-lista">' + linhas.map(function (l) {
+        return '<div><dt>' + l[0] + '</dt><dd>' + (l[1] || '<span class="muted">ainda não informado neste site</span>') + '</dd></div>';
       }).join('') + '</dl>';
+      var bCopiarEmail = $('copiar-email');
+      if (bCopiarEmail) bCopiarEmail.addEventListener('click', function () { CME.copiar(email, bCopiarEmail, 'E-mail do CME copiado.'); });
 
-      var repo = CME.repositorio(cfg);
+      /* Pedido formal pela LAI: textos e links vêm de conteudo.json */
+      var lai = $('contato-lai-conteudo');
+      if (lai) {
+        var t = c.transparencia && typeof c.transparencia === 'object' ? c.transparencia.como_pedir : null;
+        var links = CME.linksConteudo(c).filter(function (l) {
+          return /acesso a informacao|ouvidoria|12\.527/.test(CME.normalizar(l.titulo + ' ' + (l.descricao || '')));
+        });
+        var h = t ? blocoTexto(t) : '';
+        if (links.length) h += '<ul>' + links.map(function (l) {
+          return '<li><a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.titulo) + ' <span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a></li>';
+        }).join('') + '</ul>';
+        lai.innerHTML = h || '<p class="muted">Os canais oficiais de acesso à informação serão indicados aqui após conferência.</p>';
+      }
+
       var form = $('form-contato');
       var saida = $('contato-saida');
-      var btnIssue = $('contato-issue');
-      if (!email) {
-        $('contato-sem-email').hidden = false;
-      }
-      if (repo && btnIssue) btnIssue.hidden = false;
+      var campo = $('c-mensagem');
+      var erro = $('c-erro');
+      if (!email) $('contato-sem-email').hidden = false;
       function montar() {
         var nome = $('c-nome').value.trim();
         var assunto = $('c-assunto').value;
-        var msg = $('c-mensagem').value.trim();
-        var corpo = msg + (nome ? '\n\n— ' + nome : '') + '\n\n(Mensagem preparada pelo formulário do site do CME Montanha.)';
+        var msg = campo.value.trim();
+        var corpo = msg + (nome ? '\n\n— ' + nome : '') + '\n\n(Mensagem preparada no site do CME Montanha.)';
         return { titulo: '[Site CME] ' + assunto, corpo: corpo, msg: msg };
+      }
+      function validar() {
+        if (campo.value.trim()) { limparErro(); return true; }
+        erro.textContent = 'Escreva a mensagem antes de continuar.';
+        campo.setAttribute('aria-invalid', 'true');
+        campo.focus();
+        return false;
+      }
+      function limparErro() { erro.textContent = ''; campo.removeAttribute('aria-invalid'); }
+      campo.addEventListener('input', function () { if (campo.value.trim()) limparErro(); });
+      function textoCompleto(m) { return (email ? 'Para: ' + email + '\n' : '') + 'Assunto: ' + m.titulo + '\n\n' + m.corpo; }
+      function mostrar(html, m) {
+        saida.innerHTML = '<div class="notice">' + html + '</div>' +
+          '<p class="tiny">Texto da mensagem:</p><pre class="hash" style="white-space:pre-wrap">' + esc(textoCompleto(m)) + '</pre>';
       }
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        if (!validar()) return;
         var m = montar();
-        if (!m.msg) { saida.innerHTML = '<div class="notice warn" role="alert"><p>Escreva a mensagem antes de continuar.</p></div>'; $('c-mensagem').focus(); return; }
         if (!email) {
-          saida.innerHTML = '<div class="notice warn" role="status"><p>O e-mail público do CME ainda não foi informado neste site. Copie o texto abaixo e use os canais oficiais.</p></div>' +
-            '<pre class="hash" style="white-space:pre-wrap">' + esc(m.titulo + '\n\n' + m.corpo) + '</pre>';
+          mostrar('<p>O e-mail institucional do CME ainda não foi informado neste site. Use “Copiar mensagem” e envie pelos canais oficiais.</p>', m);
           return;
         }
         var href = 'mailto:' + email + '?subject=' + encodeURIComponent(m.titulo) + '&body=' + encodeURIComponent(m.corpo);
-        saida.innerHTML = '<div class="notice" role="status"><p>Seu programa de e-mail deve abrir com a mensagem pronta. Se não abrir, <a href="' + esc(href) + '">clique aqui</a> ou copie o texto abaixo e envie para <strong>' + esc(email) + '</strong>.</p></div>' +
-          '<pre class="hash" style="white-space:pre-wrap">' + esc(m.titulo + '\n\n' + m.corpo) + '</pre>';
+        if (href.length > 1900) {
+          mostrar('<p>A mensagem é longa demais para abrir direto no programa de e-mail. Use “Copiar mensagem” e cole-a em um e-mail para <strong>' + esc(email) + '</strong>.</p>', m);
+          return;
+        }
+        mostrar('<p><strong>O seu programa de e-mail deve abrir com a mensagem pronta.</strong> O CME só recebe a mensagem depois que você clicar em “Enviar” no seu programa de e-mail.</p>' +
+          '<p>Se nada abriu, o seu dispositivo pode não ter um programa de e-mail configurado: use “Copiar mensagem” e cole o texto em um e-mail para <strong>' + esc(email) + '</strong>.</p>', m);
         window.location.href = href;
       });
-      if (btnIssue) btnIssue.addEventListener('click', function () {
+      $('contato-copiar').addEventListener('click', function () {
+        if (!validar()) return;
         var m = montar();
-        if (!m.msg) { $('c-mensagem').focus(); return; }
-        if (!window.confirm('A pergunta será PÚBLICA no GitHub (exige conta). Não inclua dados pessoais ou assuntos reservados. Continuar?')) return;
-        window.open(repo + '/issues/new?title=' + encodeURIComponent(m.titulo) + '&body=' + encodeURIComponent(m.msg), '_blank', 'noopener');
+        CME.copiar(textoCompleto(m), $('contato-copiar'), 'Mensagem copiada.');
+        mostrar('<p>Mensagem copiada. Cole-a em um e-mail' + (email ? ' para <strong>' + esc(email) + '</strong>' : '') +
+          ' no serviço de e-mail que você usa. O CME só recebe a mensagem depois que você a enviar.</p>', m);
       });
       var disc = $('contato-discussoes');
-      if (repo && disc) disc.hidden = false;
+      if (CME.repositorio(cfg) && disc) disc.hidden = false;
+    });
+  }
+
+  /* ---------------- Privacidade: e-mail institucional para pedidos ---------------- */
+  function privacidade() {
+    CME.config().then(function (cfg) {
+      var email = CME.emailPublico(cfg);
+      Array.prototype.forEach.call(document.querySelectorAll('[data-email-publico]'), function (el) {
+        el.innerHTML = email ? 'pelo e-mail institucional <a href="mailto:' + esc(email) + '">' + esc(email) + '</a>'
+          : 'pela página <a href="../contato/index.html">Fale com o CME</a>';
+      });
     });
   }
 
@@ -360,6 +525,6 @@
   }
 
   var mapa = { inicio: inicio, sobre: sobre, regimento: regimento, conselheiros: conselheiros, transparencia: transparencia,
-    contato: contato, mural: mural, faq: faq, glossario: glossario, links: links };
+    contato: contato, mural: mural, faq: faq, glossario: glossario, links: links, privacidade: privacidade };
   CME.pronto(function () { if (mapa[CME.pagina]) mapa[CME.pagina](); });
 })();
