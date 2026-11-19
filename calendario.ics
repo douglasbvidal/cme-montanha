@@ -6,168 +6,215 @@ METHOD:PUBLISH
 X-WR-CALNAME:CME Montanha — Reuniões
 X-WR-TIMEZONE:America/Sao_Paulo
 BEGIN:VEVENT
-UID:cme-montanha-2025-04-11-0@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
+UID:reuniao-2025-04-11@cme-montanha
+DTSTAMP:20261119T000000Z
 DTSTART;VALUE=DATE:20250411
 DTEND;VALUE=DATE:20250412
 SUMMARY:CME Montanha — 1ª reunião extraordinária
 STATUS:CONFIRMED
 LOCATION:SEMECT\, Montanha/ES
 DESCRIPTION:1ª reunião extraordinária: eleição de representantes de p
- ais.
+ ais.\nDetalhes\, pauta e ata: https://douglasbvidal.github.io/cme-montanh
+ a/reunioes/index.html#reuniao-2025-04-11
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2025-04-11
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2025-04-14-1@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
+UID:reuniao-2025-04-14@cme-montanha
+DTSTAMP:20261119T000000Z
 DTSTART;VALUE=DATE:20250414
 DTEND;VALUE=DATE:20250415
-SUMMARY:CME Montanha — posse
+SUMMARY:CME Montanha — Posse
 STATUS:CONFIRMED
 LOCATION:SEMECT\, Montanha/ES
 DESCRIPTION:Posse dos conselheiros (ata publicada no Portal da Transparên
- cia).
+ cia).\nDetalhes\, pauta e ata: https://douglasbvidal.github.io/cme-montan
+ ha/reunioes/index.html#reuniao-2025-04-14
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2025-04-14
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2025-04-23-2@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
+UID:reuniao-2025-04-23@cme-montanha
+DTSTAMP:20261119T000000Z
 DTSTART;VALUE=DATE:20250423
 DTEND;VALUE=DATE:20250424
 SUMMARY:CME Montanha — 2ª reunião extraordinária
 STATUS:CONFIRMED
 LOCATION:Polo UAB Montanha\, Montanha/ES
 DESCRIPTION:2ª reunião extraordinária: eleição da Presidência e da V
- ice-Presidência.
+ ice-Presidência.\nDetalhes\, pauta e ata: https://douglasbvidal.github.i
+ o/cme-montanha/reunioes/index.html#reuniao-2025-04-23
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2025-04-23
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2025-06-26-3@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
-DTSTART;VALUE=DATE:20250626
-DTEND;VALUE=DATE:20250627
+UID:reuniao-2025-06-26@cme-montanha
+DTSTAMP:20261119T000000Z
+DTSTART:20250626T120000Z
 SUMMARY:CME Montanha — 2ª reunião ordinária
 STATUS:CONFIRMED
 LOCATION:Polo UAB Montanha\, Montanha/ES
 DESCRIPTION:Aprovação da Política Municipal de Educação Integral em T
  empo Integral (Parecer e Resolução CME-MO/ES nº 001-2025\, publicados 
- no DOM/ES).
+ no DOM/ES).\nDetalhes\, pauta e ata: https://douglasbvidal.github.io/cme-
+ montanha/reunioes/index.html#reuniao-2025-06-26
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2025-06-26
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2025-09-17-4@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
-DTSTART;VALUE=DATE:20250917
-DTEND;VALUE=DATE:20250918
+UID:reuniao-2025-09-17@cme-montanha
+DTSTAMP:20261119T000000Z
+DTSTART:20250917T210000Z
 SUMMARY:CME Montanha — 3ª reunião ordinária
 STATUS:CONFIRMED
 LOCATION:Polo UAB Montanha\, Montanha/ES
-DESCRIPTION:3ª reunião ordinária: calendário 2025/2026 e ratificação
-  dos Pareceres 001 e 002/2025.
+DESCRIPTION:3ª reunião ordinária. Pela ata lavrada (ainda sem assinatur
+ a)\, aprovou o calendário 2025/2026 e deliberou sobre a ratificação do
+ s Pareceres 001 e 002/2025.\nDetalhes\, pauta e ata: https://douglasbvida
+ l.github.io/cme-montanha/reunioes/index.html#reuniao-2025-09-17
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2025-09-17
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2025-10-23-5@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
-DTSTART;VALUE=DATE:20251023
-DTEND;VALUE=DATE:20251024
-SUMMARY:CME Montanha — reunião ordinária
+UID:reuniao-2025-10-23@cme-montanha
+DTSTAMP:20261119T000000Z
+DTSTART:20251023T120000Z
+SUMMARY:CME Montanha — reunião ordinária (sem quórum)
 STATUS:CONFIRMED
 DESCRIPTION:Sem quórum\; realizada como reunião informativa\, sem delibe
- rações.
+ rações.\nDetalhes\, pauta e ata: https://douglasbvidal.github.io/cme-mo
+ ntanha/reunioes/index.html#reuniao-2025-10-23
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2025-10-23
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2026-02-19-6@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
+UID:reuniao-2026-02-19@cme-montanha
+DTSTAMP:20261119T000000Z
 DTSTART;VALUE=DATE:20260219
 DTEND;VALUE=DATE:20260220
-SUMMARY:CME Montanha — sessão plenária
+SUMMARY:CME Montanha — Sessão plenária
 STATUS:CONFIRMED
 DESCRIPTION:Aprovou a renovação de credenciamento e de autorização de 
- Educação Infantil (Deliberação de 20/02/2026\, DOM/ES Ed. 2.950).
+ Educação Infantil (Deliberação de 20/02/2026\, DOM/ES Ed. 2.950).\nDe
+ talhes\, pauta e ata: https://douglasbvidal.github.io/cme-montanha/reunio
+ es/index.html#reuniao-2026-02-19
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2026-02-19
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2026-04-28-7@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
-DTSTART;VALUE=DATE:20260428
-DTEND;VALUE=DATE:20260429
-SUMMARY:CME Montanha — reunião extraordinária
+UID:reuniao-2026-04-28@cme-montanha
+DTSTAMP:20261119T000000Z
+DTSTART:20260428T193000Z
+SUMMARY:CME Montanha — Sessão plenária
 STATUS:CONFIRMED
 LOCATION:Casa dos Conselhos\, Montanha/ES
-DESCRIPTION:Convocada como 5ª reunião ordinária para 27/04 e adiada par
- a 28/04\; registrada em ata como extraordinária. Aprovou o calendário d
- e 2026 (Resolução CME-MO nº 003/2026).
+DESCRIPTION:Convocada para 27/04 e adiada para 28/04. A pauta e os atos as
+ sinados registram a sessão como reunião ordinária (5ª)\; a ata e o Of
+ ício nº 02/2026 a registram como extraordinária. Aprovou as Resoluçõ
+ es 001 a 003/2026 (inclusive o calendário de 2026) e os Pareceres 001 a 
+ 003/2026.\nDetalhes\, pauta e ata: https://douglasbvidal.github.io/cme-mo
+ ntanha/reunioes/index.html#reuniao-2026-04-28
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2026-04-28
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2026-05-21-8@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
-DTSTART;VALUE=DATE:20260521
-DTEND;VALUE=DATE:20260522
+UID:reuniao-2026-05-21@cme-montanha
+DTSTAMP:20261119T000000Z
+DTSTART:20260521T190000Z
 SUMMARY:CME Montanha — 6ª reunião ordinária
 STATUS:CONFIRMED
 LOCATION:Casa dos Conselhos e videoconferência\, Montanha/ES
+DESCRIPTION:Modalidade: híbrida (presencial e videoconferência).\nDetalh
+ es\, pauta e ata: https://douglasbvidal.github.io/cme-montanha/reunioes/i
+ ndex.html#reuniao-2026-05-21
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2026-05-21
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2026-05-27-9@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
-DTSTART;VALUE=DATE:20260527
-DTEND;VALUE=DATE:20260528
+UID:reuniao-2026-05-27@cme-montanha
+DTSTAMP:20261119T000000Z
+DTSTART:20260527T190000Z
 SUMMARY:CME Montanha — reunião extraordinária
 STATUS:CONFIRMED
 LOCATION:Videoconferência\, Montanha/ES
 DESCRIPTION:Aprovação do Regimento Interno (Resolução CME-MO/ES nº 00
- 4/2026).
+ 4/2026).\nModalidade: remota (videoconferência).\nDetalhes\, pauta e ata
+ : https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reunia
+ o-2026-05-27
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2026-05-27
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2026-06-17-10@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
-DTSTART;VALUE=DATE:20260617
-DTEND;VALUE=DATE:20260618
+UID:reuniao-2026-06-17@cme-montanha
+DTSTAMP:20261119T000000Z
+DTSTART:20260617T190000Z
 SUMMARY:CME Montanha — 7ª reunião ordinária
 STATUS:CONFIRMED
 LOCATION:Casa dos Conselhos e videoconferência\, Montanha/ES
+DESCRIPTION:Detalhes\, pauta e ata: https://douglasbvidal.github.io/cme-mo
+ ntanha/reunioes/index.html#reuniao-2026-06-17
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2026-06-17
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2026-07-30-11@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
+UID:reuniao-2026-07-30@cme-montanha
+DTSTAMP:20261119T000000Z
 DTSTART;VALUE=DATE:20260730
 DTEND;VALUE=DATE:20260731
 SUMMARY:CME Montanha — reunião ordinária (cancelada)
 STATUS:CANCELLED
-DESCRIPTION:Cancelada por falta de matéria de pauta.
+DESCRIPTION:Cancelada por falta de matéria de pauta.\nDetalhes\, pauta e 
+ ata: https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reu
+ niao-2026-07-30
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2026-07-30
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2026-09-09-13@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
-DTSTART;VALUE=DATE:20260909
-DTEND;VALUE=DATE:20260910
+UID:reuniao-2026-09-09@cme-montanha
+DTSTAMP:20261119T000000Z
+DTSTART:20260909T203000Z
 SUMMARY:CME Montanha — reunião extraordinária
 STATUS:CONFIRMED
 LOCATION:Polo UAB Montanha\, Montanha/ES
-DESCRIPTION:Diálogo com a UNCME-ES.
+DESCRIPTION:Diálogo com a UNCME-ES.\nDetalhes\, pauta e ata: https://doug
+ lasbvidal.github.io/cme-montanha/reunioes/index.html#reuniao-2026-09-09
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2026-09-09
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2026-11-18-16@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
-DTSTART;VALUE=DATE:20261118
-DTEND;VALUE=DATE:20261119
-SUMMARY:CME Montanha — reunião ordinária
-STATUS:CONFIRMED
-LOCATION:Casa dos Conselhos\, Montanha/ES
-DESCRIPTION:Reunião conjunta\, com convidados do CACS-FUNDEB e do CAE. At
- a em elaboração.
-END:VEVENT
-BEGIN:VEVENT
-UID:cme-montanha-2026-11-18-17@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
+UID:reuniao-2026-11-18-extraordinaria@cme-montanha
+DTSTAMP:20261119T000000Z
 DTSTART;VALUE=DATE:20261118
 DTEND;VALUE=DATE:20261119
 SUMMARY:CME Montanha — reunião extraordinária (sessão reservada)
 STATUS:CONFIRMED
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2026-11-18-extraordinaria
 END:VEVENT
 BEGIN:VEVENT
-UID:cme-montanha-2026-12-16-18@douglasbvidal.github.io
-DTSTAMP:20261119T032251Z
+UID:reuniao-2026-11-18-ordinaria@cme-montanha
+DTSTAMP:20261119T000000Z
+DTSTART:20261118T193000Z
+SUMMARY:CME Montanha — reunião ordinária
+STATUS:CONFIRMED
+LOCATION:Casa dos Conselhos\, Montanha/ES
+DESCRIPTION:Reunião conjunta\, com convidados do CACS-FUNDEB e do CAE. At
+ a em elaboração.\nDetalhes\, pauta e ata: https://douglasbvidal.github.
+ io/cme-montanha/reunioes/index.html#reuniao-2026-11-18-ordinaria
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2026-11-18-ordinaria
+END:VEVENT
+BEGIN:VEVENT
+UID:reuniao-2026-12-16@cme-montanha
+DTSTAMP:20261119T000000Z
 DTSTART;VALUE=DATE:20261216
 DTEND;VALUE=DATE:20261217
 SUMMARY:CME Montanha — reunião ordinária
 STATUS:TENTATIVE
 DESCRIPTION:Data do calendário oficial (Res. 003/2026)\; convocação a c
- onfirmar.
+ onfirmar.\nDetalhes\, pauta e ata: https://douglasbvidal.github.io/cme-mo
+ ntanha/reunioes/index.html#reuniao-2026-12-16
+URL:https://douglasbvidal.github.io/cme-montanha/reunioes/index.html#reuni
+ ao-2026-12-16
 END:VEVENT
 END:VCALENDAR

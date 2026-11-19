@@ -8,7 +8,8 @@
   "pauta_id": null,
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "1ª reunião extraordinária: eleição de representantes de pais."
+  "observacao_publica": "1ª reunião extraordinária: eleição de representantes de pais.",
+  "id": "2025-04-11"
  },
  {
   "data": "2025-04-14",
@@ -19,7 +20,8 @@
   "pauta_id": null,
   "ata_id": "ata-posse-2025-04-14",
   "reservada": false,
-  "observacao_publica": "Posse dos conselheiros (ata publicada no Portal da Transparência)."
+  "observacao_publica": "Posse dos conselheiros (ata publicada no Portal da Transparência).",
+  "id": "2025-04-14"
  },
  {
   "data": "2025-04-23",
@@ -30,7 +32,8 @@
   "pauta_id": null,
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "2ª reunião extraordinária: eleição da Presidência e da Vice-Presidência."
+  "observacao_publica": "2ª reunião extraordinária: eleição da Presidência e da Vice-Presidência.",
+  "id": "2025-04-23"
  },
  {
   "data": "2025-06-26",
@@ -41,7 +44,13 @@
   "pauta_id": null,
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "Aprovação da Política Municipal de Educação Integral em Tempo Integral (Parecer e Resolução CME-MO/ES nº 001-2025, publicados no DOM/ES)."
+  "observacao_publica": "Aprovação da Política Municipal de Educação Integral em Tempo Integral (Parecer e Resolução CME-MO/ES nº 001-2025, publicados no DOM/ES).",
+  "id": "2025-06-26",
+  "horario": "9h",
+  "documentos_relacionados": [
+   "resolucao-001-2025-cme-mo",
+   "politica-educacao-integral-2025"
+  ]
  },
  {
   "data": "2025-09-17",
@@ -52,7 +61,13 @@
   "pauta_id": "pauta-2025-09-17",
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "3ª reunião ordinária: calendário 2025/2026 e ratificação dos Pareceres 001 e 002/2025."
+  "observacao_publica": "3ª reunião ordinária. Pela ata lavrada (ainda sem assinatura), aprovou o calendário 2025/2026 e deliberou sobre a ratificação dos Pareceres 001 e 002/2025.",
+  "id": "2025-09-17",
+  "horario": "18h",
+  "documentos_relacionados": [
+   "parecer-001-2025-cme-mo",
+   "parecer-002-2025-cme-mo"
+  ]
  },
  {
   "data": "2025-10-23",
@@ -63,7 +78,9 @@
   "pauta_id": "pauta-2025-10-23",
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "Sem quórum; realizada como reunião informativa, sem deliberações."
+  "observacao_publica": "Sem quórum; realizada como reunião informativa, sem deliberações.",
+  "id": "2025-10-23",
+  "horario": "9h"
  },
  {
   "data": "2026-02-19",
@@ -74,18 +91,34 @@
   "pauta_id": null,
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "Aprovou a renovação de credenciamento e de autorização de Educação Infantil (Deliberação de 20/02/2026, DOM/ES Ed. 2.950)."
+  "observacao_publica": "Aprovou a renovação de credenciamento e de autorização de Educação Infantil (Deliberação de 20/02/2026, DOM/ES Ed. 2.950).",
+  "id": "2026-02-19",
+  "documentos_relacionados": [
+   "deliberacao-2026-02-20-cme-mo"
+  ]
  },
  {
   "data": "2026-04-28",
-  "tipo": "extraordinária",
+  "tipo": "sessão plenária",
   "numero": null,
   "local": "Casa dos Conselhos",
   "status": "realizada",
   "pauta_id": "pauta-2026-04-28",
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "Convocada como 5ª reunião ordinária para 27/04 e adiada para 28/04; registrada em ata como extraordinária. Aprovou o calendário de 2026 (Resolução CME-MO nº 003/2026)."
+  "observacao_publica": "Convocada para 27/04 e adiada para 28/04. A pauta e os atos assinados registram a sessão como reunião ordinária (5ª); a ata e o Ofício nº 02/2026 a registram como extraordinária. Aprovou as Resoluções 001 a 003/2026 (inclusive o calendário de 2026) e os Pareceres 001 a 003/2026.",
+  "id": "2026-04-28",
+  "horario": "16h30",
+  "documentos_relacionados": [
+   "atos-cme-mo-28-04-2026",
+   "resolucao-001-2026-cme-mo",
+   "resolucao-002-2026-cme-mo",
+   "resolucao-003-2026-cme-mo",
+   "parecer-001-2026-cme-mo",
+   "parecer-002-2026-cme-mo",
+   "parecer-003-2026-cme-mo",
+   "oficio-002-2026-cme-mo"
+  ]
  },
  {
   "data": "2026-05-21",
@@ -96,7 +129,15 @@
   "pauta_id": "pauta-2026-05-21",
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": null
+  "observacao_publica": null,
+  "id": "2026-05-21",
+  "horario": "16h",
+  "modalidade": "hibrida",
+  "documentos_relacionados": [
+   "oficio-004-2026-cme-mo",
+   "oficio-005-2026-cme-mo",
+   "oficio-006-2026-cme-mo"
+  ]
  },
  {
   "data": "2026-05-27",
@@ -107,7 +148,15 @@
   "pauta_id": "pauta-2026-05-27",
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "Aprovação do Regimento Interno (Resolução CME-MO/ES nº 004/2026)."
+  "observacao_publica": "Aprovação do Regimento Interno (Resolução CME-MO/ES nº 004/2026).",
+  "id": "2026-05-27",
+  "horario": "16h",
+  "modalidade": "remota",
+  "documentos_relacionados": [
+   "regimento-interno-resolucao-004-2026",
+   "regimento-publicacao-dom-2026",
+   "decreto-5023-2026"
+  ]
  },
  {
   "data": "2026-06-17",
@@ -118,7 +167,9 @@
   "pauta_id": "pauta-2026-06-17",
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": null
+  "observacao_publica": null,
+  "id": "2026-06-17",
+  "horario": "16h"
  },
  {
   "data": "2026-07-30",
@@ -129,7 +180,8 @@
   "pauta_id": null,
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "Cancelada por falta de matéria de pauta."
+  "observacao_publica": "Cancelada por falta de matéria de pauta.",
+  "id": "2026-07-30"
  },
  {
   "data": "2026-08-19",
@@ -140,7 +192,8 @@
   "pauta_id": null,
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "Data do calendário oficial (Res. 003/2026); não há ata nem convocação registradas."
+  "observacao_publica": "Data do calendário oficial (Res. 003/2026); não há ata nem convocação registradas.",
+  "id": "2026-08-19"
  },
  {
   "data": "2026-09-09",
@@ -151,7 +204,9 @@
   "pauta_id": null,
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "Diálogo com a UNCME-ES."
+  "observacao_publica": "Diálogo com a UNCME-ES.",
+  "id": "2026-09-09",
+  "horario": "17h30"
  },
  {
   "data": "2026-09-16",
@@ -162,7 +217,8 @@
   "pauta_id": null,
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "Data do calendário oficial (Res. 003/2026); não há ata nem convocação registradas."
+  "observacao_publica": "Data do calendário oficial (Res. 003/2026); não há ata nem convocação registradas.",
+  "id": "2026-09-16"
  },
  {
   "data": "2026-10-21",
@@ -173,7 +229,8 @@
   "pauta_id": null,
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "Data do calendário oficial (Res. 003/2026); não há ata nem convocação registradas."
+  "observacao_publica": "Data do calendário oficial (Res. 003/2026); não há ata nem convocação registradas.",
+  "id": "2026-10-21"
  },
  {
   "data": "2026-11-18",
@@ -181,10 +238,16 @@
   "numero": null,
   "local": "Casa dos Conselhos",
   "status": "realizada",
-  "pauta_id": null,
+  "pauta_id": "pauta-2026-11-18-ordinaria",
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "Reunião conjunta, com convidados do CACS-FUNDEB e do CAE. Ata em elaboração."
+  "observacao_publica": "Reunião conjunta, com convidados do CACS-FUNDEB e do CAE. Ata em elaboração.",
+  "id": "2026-11-18-ordinaria",
+  "horario": "16h30",
+  "convocacao_id": "convocacao-2026-11-18-ordinaria",
+  "documentos_relacionados": [
+   "parecer-004-2026-cme-mo"
+  ]
  },
  {
   "data": "2026-11-18",
@@ -195,7 +258,9 @@
   "pauta_id": null,
   "ata_id": null,
   "reservada": true,
-  "observacao_publica": null
+  "observacao_publica": null,
+  "id": "2026-11-18-extraordinaria",
+  "horario": "18h30"
  },
  {
   "data": "2026-12-16",
@@ -206,6 +271,7 @@
   "pauta_id": null,
   "ata_id": null,
   "reservada": false,
-  "observacao_publica": "Data do calendário oficial (Res. 003/2026); convocação a confirmar."
+  "observacao_publica": "Data do calendário oficial (Res. 003/2026); convocação a confirmar.",
+  "id": "2026-12-16"
  }
 ]
