@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>{{TITULO_DOC}}</title>
+<style>
+  @page { size: A4; margin: 22mm 20mm 24mm 20mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", "Liberation Sans", Arial, sans-serif; font-size: 11.5pt; line-height: 1.5; color: #111; margin: 0; }
+  header { border-bottom: 2px solid #0f4c5c; padding-bottom: 8px; margin-bottom: 14px; text-align: center; }
+  header .org { font-weight: 700; letter-spacing: .04em; font-size: 12.5pt; color: #0f4c5c; }
+  header .sub { font-size: 9.5pt; color: #333; }
+  h1 { font-size: 14pt; text-align: center; margin: 6px 0 2px; letter-spacing: .03em; }
+  .numero { text-align: center; font-size: 10.5pt; margin-bottom: 10px; }
+  .natureza { border: 1px solid #b45309; background: #fff7ed; padding: 8px 10px; font-size: 9.5pt; margin: 0 0 14px; page-break-inside: avoid; }
+  .natureza strong { color: #92400e; }
+  table.dados { border-collapse: collapse; width: 100%; margin-bottom: 14px; font-size: 10.5pt; }
+  table.dados th { text-align: left; width: 30%; background: #eef5f6; padding: 5px 8px; border: 1px solid #c9d8db; font-weight: 600; }
+  table.dados td { padding: 5px 8px; border: 1px solid #c9d8db; }
+  h2 { font-size: 11.5pt; margin: 14px 0 6px; color: #0f4c5c; text-transform: uppercase; letter-spacing: .03em; }
+  ol, ul { margin: 0 0 8px 0; padding-left: 22px; }
+  li { margin: 3px 0; }
+  .assinatura-original { margin-top: 18px; font-size: 10.5pt; }
+  .fonte { margin-top: 18px; font-size: 9pt; color: #333; border-top: 1px solid #c9d8db; padding-top: 6px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="org">CONSELHO MUNICIPAL DE EDUCAÇÃO DE MONTANHA/ES</div>
+  <div class="sub">CME-MO/ES — Montanha, Espírito Santo</div>
+</header>
+<h1>{{TITULO}}</h1>
+{{NUMERO}}
+{{NATUREZA}}
+<table class="dados" aria-label="Dados da reunião">{{DADOS}}</table>
+{{CORPO}}
+{{ASSINATURA}}
+<div class="fonte">{{FONTE}}</div>
+</body>
+</html>
