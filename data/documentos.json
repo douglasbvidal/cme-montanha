@@ -112,6 +112,25 @@
   "url": "https://montanha-es.portaltp.com.br/common/DocumentoS3.ashx?id=1629089"
  },
  {
+  "id": "decreto-5023-2026",
+  "categoria": "legislacao",
+  "titulo": "Decreto nº 5.023, de 03 de junho de 2026",
+  "numero": "5.023",
+  "ano": 2026,
+  "data": "2026-06-03",
+  "emissor": "Prefeitura Municipal de Montanha/ES",
+  "assunto": "Homologa o Regimento Interno do Conselho Municipal de Educação do Município de Montanha - ES.",
+  "arquivo": null,
+  "tamanho_kb": null,
+  "paginas": null,
+  "status": "vigente",
+  "fonte_original": null,
+  "sha256": null,
+  "externo": true,
+  "url": "https://montanha.legislacaocompilada.com.br/norma.aspx?id=2682",
+  "observacao": "Documento de outro órgão. Link para o ato no portal Legislação Online de Montanha (situação: em vigor; consulta em 18/11/2026)."
+ },
+ {
   "id": "oficio-001-2025-cme-mo",
   "categoria": "oficios",
   "titulo": "Ofício nº 01/2025 — CME/Montanha-ES (Câmara Municipal)",
@@ -480,10 +499,10 @@
   "arquivo": "docs/regimento/regimento-interno-resolucao-004-2026.pdf",
   "tamanho_kb": 320.2,
   "paginas": 23,
-  "status": "referencia",
+  "status": "vigente",
   "fonte_original": null,
   "sha256": "ffd400bf987c1b1445b4d4bf7afb505368edb73a7df4046c127278e35f60f774",
-  "observacao": "Texto considerado aprovado em 27/05/2026 (Res. 004/2026): versão mais recente do arquivo no acervo (25/05/2026). O cabeçalho do arquivo traz a legenda \"versão para deliberação em 27/05/2026\". O ato de homologação pelo Poder Executivo não foi localizado nos canais oficiais consultados em 18/11/2026."
+  "observacao": "Texto aprovado em 27/05/2026 (Res. 004/2026), conforme a versão mais recente do arquivo no acervo (25/05/2026); o cabeçalho do arquivo traz a legenda \"versão para deliberação em 27/05/2026\". Homologado pelo Decreto nº 5.023, de 03/06/2026, que prevê vigência na data de sua publicação (data de publicação não conferida)."
  },
  {
   "id": "atos-cme-mo-28-04-2026",
