@@ -1,1 +1,254 @@
-[]
+[
+ {
+  "nome": "Cleide Ribeiro de Souza Pereira",
+  "segmento": "Poder Executivo (ao menos 1 da SEMECT)",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Fabiana Brito dos Santos",
+  "segmento": "Poder Executivo (ao menos 1 da SEMECT)",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Adriana da Silva Santos Teixeira",
+  "segmento": "Poder Executivo (ao menos 1 da SEMECT)",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Willian Barbosa Dutra",
+  "segmento": "Poder Executivo (ao menos 1 da SEMECT)",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Eliane Aparecida Batista de Souza",
+  "segmento": "Professores da educação básica pública da rede municipal (indicados pela entidade sindical)",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Zildete Alves dos Santos",
+  "segmento": "Professores da educação básica pública da rede municipal (indicados pela entidade sindical)",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Cleide Rodrigues Pereira Ferreira",
+  "segmento": "Professores da educação básica pública da rede municipal (indicados pela entidade sindical)",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Leni Pereira Medina",
+  "segmento": "Professores da educação básica pública da rede municipal (indicados pela entidade sindical)",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Marcela Pereira Silva",
+  "segmento": "Diretores das escolas públicas da rede municipal",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Romênia Gonçalves de Souza",
+  "segmento": "Diretores das escolas públicas da rede municipal",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Ana Paula Fernandes",
+  "segmento": "Servidores técnico-administrativos das escolas da rede municipal",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Cathianucy Lima Brito",
+  "segmento": "Servidores técnico-administrativos das escolas da rede municipal",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Tecio Araujo de Oliveira Bueloni",
+  "segmento": "Pais de estudantes da rede municipal",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": "Vice-Presidente",
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Alaine Barbosa Vidal",
+  "segmento": "Pais de estudantes da rede municipal",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Mayara Pimentel Caribé",
+  "segmento": "Pais de estudantes da rede municipal",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Patricia da Silva Santos",
+  "segmento": "Pais de estudantes da rede municipal",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Laura dos Santos Oliveira",
+  "segmento": "Estudantes da rede pública (maiores de 18 anos ou emancipados)",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Flagner Guimarães Santos",
+  "segmento": "Estudantes da rede pública (maiores de 18 anos ou emancipados)",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Hemily dos Santos Fernandes",
+  "segmento": "Estudantes da rede pública (maiores de 18 anos ou emancipados)",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Katharyna Cassilhas Bernardo",
+  "segmento": "Estudantes da rede pública (maiores de 18 anos ou emancipados)",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Maria José Rodrigues de Morais Miranda",
+  "segmento": "Conselho Tutelar",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Edmaria de Jesus",
+  "segmento": "Conselho Tutelar",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Adilma Barreto Venefrides",
+  "segmento": "Organizações da Sociedade Civil (OSCs)",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Júlio César Alves dos Santos",
+  "segmento": "Organizações da Sociedade Civil (OSCs)",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Douglas Bitencourt Vidal",
+  "segmento": "Organizações da Sociedade Civil (OSCs)",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": "Presidente",
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Wilton Antunes de Azevedo",
+  "segmento": "Organizações da Sociedade Civil (OSCs)",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Elma Nunes de Figueredo",
+  "segmento": "Escolas do Campo",
+  "entidade": null,
+  "condicao": "titular",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ },
+ {
+  "nome": "Cleuza Calixto Silva Freitas",
+  "segmento": "Escolas do Campo",
+  "entidade": null,
+  "condicao": "suplente",
+  "cargo_mesa": null,
+  "mandato": "2025–2028",
+  "fonte": "Decreto nº 4.908/2025 (DOM/ES Ed. 2.770, 28/05/2025, p. 211)"
+ }
+]

@@ -122,8 +122,8 @@
         '<th scope="col">Nome</th><th scope="col">Condição</th><th scope="col">Entidade</th><th scope="col">Mandato</th></tr></thead><tbody>';
       ordem.forEach(function (g) {
         html += '<tr><th scope="rowgroup" colspan="4">' + esc(g) + '</th></tr>';
-        grupos[g].sort(function (a, b) { return (a.condicao === 'titular' ? 0 : 1) - (b.condicao === 'titular' ? 0 : 1); })
-          .forEach(function (p) {
+        /* mantém a ordem do ato oficial (cada titular seguido do seu suplente) */
+        grupos[g].forEach(function (p) {
             var cond = p.condicao ? p.condicao.charAt(0).toUpperCase() + p.condicao.slice(1) : '—';
             html += '<tr><td>' + esc(p.nome) + (p.cargo_mesa ? ' <span class="badge tipo">' + esc(p.cargo_mesa) + '</span>' : '') + '</td><td>' + esc(cond) +
               '</td><td>' + esc(p.entidade || '—') + '</td><td>' + esc(p.mandato || '—') + '</td></tr>';
@@ -134,6 +134,17 @@
       lista.forEach(function (p) { var f = CME.fontePublica(p.fonte); if (f && fontes.indexOf(f) === -1) fontes.push(f); });
       if (fontes.length) html += '<p class="fonte">' + esc(fontes.join('; ')) + '</p>';
       el.innerHTML = html;
+      /* nota pública sobre alterações em andamento (conteudo.json → conselheiros_nota) */
+      CME.carregar('data/conteudo.json').then(function (r) {
+        var c = r && r.dados;
+        var nota = c && c.conselheiros_nota;
+        if (!nota || !nota.texto) return;
+        var div = document.createElement('div');
+        div.className = 'notice';
+        div.innerHTML = '<strong>Situação da composição</strong>' + paragrafos(nota.texto) +
+          (nota.fonte ? '<p class="fonte">' + esc(nota.fonte) + '</p>' : '');
+        el.insertBefore(div, el.firstChild);
+      }).catch(function () {});
     });
   }
 

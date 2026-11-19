@@ -309,9 +309,9 @@ pagina('resolucoes-pareceres', 'resolucoes-pareceres', 'Resoluções e pareceres
        f'<div class="wrap">{lista_docs("resolucoes,pareceres")}</div>', ['documentos'])
 
 pagina('oficios', 'oficios', 'Ofícios',
-       'Ofícios e encaminhamentos do Conselho Municipal de Educação de Montanha (ES) já enviados, com PDF para download.',
+       'Ofícios e encaminhamentos do Conselho Municipal de Educação de Montanha (ES), com PDF para download.',
        'Ofícios', cabeca_pagina('Documentos', 'Ofícios e encaminhamentos',
-                                'Correspondências oficiais do Conselho. Somente ofícios já enviados são publicados.') +
+                                'Correspondências oficiais do Conselho. A ficha de cada ofício indica quando a cópia não tem assinatura; dados pessoais de terceiros aparecem com tarja.') +
        f'<div class="wrap">{lista_docs("oficios")}</div>', ['documentos'])
 
 # ---------------------------------------------------------------- Reuniões

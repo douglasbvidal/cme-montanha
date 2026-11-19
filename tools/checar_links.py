@@ -19,7 +19,7 @@ from urllib.parse import unquote, urlsplit
 IGNORAR_PASTAS = {'_amostra', '_relatorios', 'tools', '.git', '.github', '_site', 'node_modules'}
 CATEGORIAS = {'legislacao', 'regimento', 'resolucoes', 'pareceres', 'oficios', 'pautas', 'atas', 'outros'}
 STATUS_DOC = {'vigente', 'assinado', 'enviado', 'em_estudo', 'referencia'}
-STATUS_REUNIAO = {'realizada', 'prevista', 'convocada', 'cancelada'}
+STATUS_REUNIAO = {'realizada', 'prevista', 'convocada', 'cancelada', 'sem_quorum', 'sem_registro'}
 ESQUEMAS_EXTERNOS = ('http:', 'https:', 'mailto:', 'tel:', 'webcal:', 'data:', 'javascript:')
 
 

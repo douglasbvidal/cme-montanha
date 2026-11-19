@@ -27,7 +27,8 @@
     em_estudo: 'Em estudo', referencia: 'Referência'
   };
   CME.STATUS_REUNIAO = {
-    realizada: 'Realizada', prevista: 'Prevista', convocada: 'Convocada', cancelada: 'Cancelada'
+    realizada: 'Realizada', prevista: 'Prevista', convocada: 'Convocada', cancelada: 'Cancelada',
+    sem_quorum: 'Sem quórum (informativa)', sem_registro: 'Prevista; sem registro de realização'
   };
   CME.MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho',
     'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];

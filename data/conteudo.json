@@ -38,7 +38,7 @@
     "artigo": "art. 4º, § 1º"
    },
    {
-    "texto": "A composição em exercício foi nomeada pelo Decreto nº 4.908, de 27/05/2025, que indica também Presidente e Vice-Presidente. O decreto nomeia 1 titular e 1 suplente do Conselho Tutelar, enquanto a Lei prevê 2 representantes desse segmento — situação a confirmar com a SEMECT.",
+    "texto": "A composição em exercício foi nomeada pelo Decreto nº 4.908, de 27/05/2025, que indica também Presidente e Vice-Presidente. O decreto nomeia 1 titular e 1 suplente do Conselho Tutelar, enquanto a Lei prevê 2 representantes desse segmento; o CME solicitou a regularização da composição à SEMECT pelo Ofício nº 04/2026.",
     "fonte": "Decreto nº 4.908/2025",
     "artigo": "art. 1º"
    }
@@ -115,8 +115,8 @@
   },
   {
    "pergunta": "Quem são os conselheiros atuais?",
-   "resposta": "Os membros foram nomeados pelo Decreto nº 4.908/2025, disponível na seção de Legislação. A lista de composição atualizada: a confirmar.",
-   "fonte": "Decreto nº 4.908/2025"
+   "resposta": "Os membros foram nomeados pelo Decreto nº 4.908/2025 (publicado no DOM/ES de 28/05/2025), para o quadriênio 2025–2028. A lista completa, com titulares, suplentes e mesa diretora, está na página Conselheiros, junto com a situação da recomposição solicitada pelo Ofício nº 04/2026.",
+   "fonte": "Decreto nº 4.908/2025; Edital nº 001/2025; Ofício nº 04/2026"
   },
   {
    "pergunta": "Quanto tempo dura o mandato?",
@@ -145,13 +145,13 @@
   },
   {
    "pergunta": "As reuniões são públicas?",
-   "resposta": "A confirmar conforme o Regimento após homologação; o calendário de reuniões está na página Reuniões.",
-   "fonte": "a confirmar"
+   "resposta": "Os atos e as reuniões do CME seguem o princípio da publicidade, e o Regimento prevê transparência ativa. Nas reuniões remotas ou híbridas, o público externo pode ser admitido, sem direito a voto, com autorização da Presidência ou do Plenário. Matéria sigilosa ou que envolva dados pessoais de crianças, estudantes ou famílias pode ter gravação, divulgação ou acesso restritos, com justificativa em ata.",
+   "fonte": "Regimento Interno (Res. 004/2026), arts. 37, § 3º, 40 e 81"
   },
   {
    "pergunta": "Como pedir uma informação ao Conselho?",
-   "resposta": "Qualquer pessoa pode pedir acesso a informações públicas com base na Lei de Acesso à Informação (Lei nº 12.527/2011). O canal oficial do Conselho para pedidos: a confirmar.",
-   "fonte": "Lei nº 12.527/2011 (texto não conferido em fonte oficial nesta execução)"
+   "resposta": "Qualquer pessoa pode pedir acesso a informações públicas com base na Lei de Acesso à Informação (Lei nº 12.527/2011). Os pedidos ao Município de Montanha podem ser feitos pelo Serviço de Informação ao Cidadão (SIC) da Prefeitura: presencialmente ou pela internet (plataforma Informa.BR, da CGU), conforme a página Ouvidoria / Acesso à Informação do site oficial. A página Contato deste site traz os canais do Conselho.",
+   "fonte": "Lei nº 12.527/2011, arts. 10 e 11; montanha.es.gov.br/ouvidoria-acesso-a-informacao (consulta em 19/11/2026)"
   },
   {
    "pergunta": "Por que algumas atas ou ofícios não estão no site?",
@@ -237,13 +237,13 @@
   },
   {
    "termo": "PME",
-   "definicao": "Plano Municipal de Educação, cuja aprovação é competência do CME segundo a Lei 1.166/2024. Lei municipal do PME: a confirmar.",
-   "fonte": "Lei nº 1.166/2024 (Portal da Transparência de Montanha), art. 3º, II"
+   "definicao": "Plano Municipal de Educação, cuja aprovação é competência do CME segundo a Lei 1.166/2024. Em Montanha, o PME 2015–2025 foi aprovado pela Lei nº 905/2015, com vigência prorrogada até 22/06/2026 pela Lei nº 1.194/2025.",
+   "fonte": "Lei nº 1.166/2024, art. 3º, II; Leis nº 905/2015 e nº 1.194/2025 (Legislação Online de Montanha, consulta em 19/11/2026)"
   },
   {
    "termo": "PNE",
-   "definicao": "Plano Nacional de Educação, plano decenal previsto na Constituição Federal (art. 214). Lei vigente: a confirmar.",
-   "fonte": "a confirmar em fonte oficial"
+   "definicao": "Plano Nacional de Educação, plano decenal previsto na Constituição Federal (art. 214). O PNE vigente foi aprovado pela Lei nº 15.388, de 14/04/2026.",
+   "fonte": "Lei nº 15.388/2026 (planalto.gov.br, consulta em 19/11/2026)"
   },
   {
    "termo": "LDB",
@@ -263,17 +263,17 @@
   {
    "termo": "FNDE",
    "definicao": "Fundo Nacional de Desenvolvimento da Educação, autarquia federal vinculada ao Ministério da Educação.",
-   "fonte": "a confirmar em fonte oficial"
+   "fonte": "gov.br/fnde (consulta em 19/11/2026)"
   },
   {
    "termo": "SIOPE",
    "definicao": "Sistema de Informações sobre Orçamentos Públicos em Educação, mantido pelo FNDE.",
-   "fonte": "a confirmar em fonte oficial"
+   "fonte": "gov.br/fnde (consulta em 19/11/2026)"
   },
   {
    "termo": "BNCC",
    "definicao": "Base Nacional Comum Curricular, documento normativo das aprendizagens essenciais da educação básica.",
-   "fonte": "a confirmar em fonte oficial"
+   "fonte": "basenacionalcomum.mec.gov.br (consulta em 19/11/2026)"
   },
   {
    "termo": "UNCME",
@@ -282,8 +282,8 @@
   },
   {
    "termo": "CEUMEST",
-   "definicao": "Sigla que aparece em comunicados e editais recebidos pelo CME (acervo). Denominação completa: a confirmar.",
-   "fonte": "a confirmar"
+   "definicao": "Sigla usada como prefixo nos ofícios da UNCME-ES (seção estadual da União Nacional dos Conselhos Municipais de Educação no Espírito Santo) recebidos pelo CME.",
+   "fonte": "Ofícios CEUMEST nº 022/2025 e 023/2025 (UNCME-ES), recebidos em 11/04/2025"
   }
  ],
  "transparencia": {
@@ -306,35 +306,94 @@
   ],
   "como_pedir": [
    {
-    "texto": "Qualquer interessado pode apresentar pedido de acesso a informações públicas, nos termos da Lei de Acesso à Informação. Prazos e procedimentos: conferir no texto oficial da Lei nº 12.527/2011.",
-    "fonte": "Lei nº 12.527/2011 (texto não conferido em fonte oficial nesta execução)",
-    "artigo": "arts. 10 e 11 (a confirmar)"
+    "texto": "Qualquer interessado pode apresentar pedido de acesso a informações públicas, por qualquer meio legítimo, com identificação do requerente e especificação da informação; a resposta deve ser imediata ou em até 20 dias, prorrogáveis por mais 10 com justificativa.",
+    "fonte": "Lei nº 12.527/2011 (planalto.gov.br, consulta em 19/11/2026)",
+    "artigo": "arts. 10 e 11"
    },
    {
-    "texto": "Canal oficial do CME para pedidos (e-mail e endereço): a confirmar.",
-    "fonte": "a confirmar",
+    "texto": "Canais do Município: SIC presencial da Prefeitura de Montanha; pedido online pela plataforma Informa.BR (CGU); ouvidoria pela plataforma Fala.BR. Endereços na página Ouvidoria / Acesso à Informação do site da Prefeitura.",
+    "fonte": "montanha.es.gov.br/ouvidoria-acesso-a-informacao (consulta em 19/11/2026)",
     "artigo": null
    }
   ]
  },
  "links_uteis": {
-  "verificados": [],
-  "candidatos_nao_verificados": [
+  "verificados": [
    {
     "titulo": "Prefeitura Municipal de Montanha",
-    "url": "https://www.montanha.es.gov.br",
-    "origem": "consta do timbre da Lei 1.166/2024; acesso não testado"
+    "url": "https://montanha.es.gov.br/",
+    "descricao": "Site oficial do Município."
    },
    {
-    "titulo": "Lei nº 12.527/2011 (LAI) — Planalto",
+    "titulo": "Ouvidoria e Acesso à Informação — Prefeitura de Montanha",
+    "url": "https://montanha.es.gov.br/ouvidoria-acesso-a-informacao/",
+    "descricao": "Canais do SIC (presencial e Informa.BR) e da Ouvidoria (Fala.BR)."
+   },
+   {
+    "titulo": "Legislação Online de Montanha",
+    "url": "https://montanha.legislacaocompilada.com.br/",
+    "descricao": "Leis e decretos municipais, com situação de vigência."
+   },
+   {
+    "titulo": "Diário Oficial dos Municípios do ES (DOM/ES — AMUNES)",
+    "url": "https://ioes.dio.es.gov.br/dom",
+    "descricao": "Onde o Município publica seus atos oficiais."
+   },
+   {
+    "titulo": "Portal da Transparência de Montanha — Conselho Municipal de Educação",
+    "url": "https://montanha-es.portaltp.com.br/consultas/documentos.aspx?id=490",
+    "descricao": "Lei 1.166/2024, Decreto 4.908/2025 e ata de posse."
+   },
+   {
+    "titulo": "Lei nº 12.527/2011 — Lei de Acesso à Informação",
     "url": "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm",
-    "origem": "endereço conhecido; acesso não testado nesta execução"
+    "descricao": "Texto oficial (Planalto)."
    },
    {
-    "titulo": "Lei nº 9.394/1996 (LDB) — Planalto",
+    "titulo": "Lei nº 9.394/1996 — LDB",
     "url": "https://www.planalto.gov.br/ccivil_03/leis/l9394.htm",
-    "origem": "endereço conhecido; acesso não testado nesta execução"
+    "descricao": "Lei de Diretrizes e Bases da Educação Nacional."
+   },
+   {
+    "titulo": "Lei nº 14.113/2020 — FUNDEB",
+    "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2020/lei/l14113.htm",
+    "descricao": "Regulamenta o FUNDEB e os conselhos de acompanhamento (CACS)."
+   },
+   {
+    "titulo": "Lei nº 15.388/2026 — Plano Nacional de Educação",
+    "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15388.htm",
+    "descricao": "PNE vigente."
+   },
+   {
+    "titulo": "Base Nacional Comum Curricular (BNCC)",
+    "url": "https://basenacionalcomum.mec.gov.br/",
+    "descricao": "Documento normativo das aprendizagens essenciais."
+   },
+   {
+    "titulo": "Conselho Nacional de Educação (CNE)",
+    "url": "https://www.gov.br/mec/pt-br/cne",
+    "descricao": "Normas e pareceres nacionais."
+   },
+   {
+    "titulo": "FNDE",
+    "url": "https://www.gov.br/fnde/pt-br",
+    "descricao": "Fundo Nacional de Desenvolvimento da Educação (programas, SIOPE, FUNDEB)."
+   },
+   {
+    "titulo": "Secretaria de Estado da Educação do ES (SEDU)",
+    "url": "https://sedu.es.gov.br/",
+    "descricao": "Rede estadual e normas estaduais."
+   },
+   {
+    "titulo": "UNCME — União Nacional dos Conselhos Municipais de Educação",
+    "url": "https://uncme.org.br/",
+    "descricao": "Rede nacional dos conselhos municipais de educação."
    }
-  ]
+  ],
+  "candidatos_nao_verificados": []
+ },
+ "conselheiros_nota": {
+  "texto": "A lista reproduz a composição nomeada pelo Decreto nº 4.908/2025, último ato de nomeação de membros do CME localizado na Legislação Online e no Diário Oficial dos Municípios (consulta em 19/11/2026). Pelo Ofício nº 04/2026, o Conselho solicitou à SEMECT a regularização da composição do CME-MO e encaminhamentos sobre a representação estudantil; até a data da consulta não foi localizado novo decreto de nomeação. A Lei nº 1.166/2024 prevê 2 representantes do Conselho Tutelar, e o decreto nomeia 1 titular e 1 suplente. O mandato 2025–2028 corresponde ao quadriênio do Edital de Convocação nº 001/2025.",
+  "fonte": "Decreto nº 4.908/2025; Ofício nº 04/2026; Lei nº 1.166/2024, art. 4º; Edital nº 001/2025 (DOM/ES Ed. 2.739, 08/04/2025)"
  }
 }
